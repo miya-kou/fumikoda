@@ -119,36 +119,6 @@
         "button_text_cn": "更多"
       }
     },
-    "featured-collections": {
-      "type": "featured-collections",
-      "blocks": {
-        "3238de14-408f-4bc4-9949-4a4a9a9768ba": {
-          "type": "collection",
-          "settings": {
-            "collection": "renewal-features",
-            "title": "FEATURES",
-            "title_en": "FEATURES",
-            "title_cn": "特点",
-            "grid_items_count": 8,
-            "button_text": ""
-          }
-        }
-      },
-      "block_order": [
-        "3238de14-408f-4bc4-9949-4a4a9a9768ba"
-      ],
-      "settings": {
-        "title": "FEATURES",
-        "title_en": "FEATURES",
-        "title_cn": "特点",
-        "layout_mode": "carousel",
-        "show_product_info": true,
-        "show_vendor": false,
-        "show_color_swatch": true,
-        "grid_mobile_items_per_row": "1",
-        "grid_desktop_items_per_row": 4
-      }
-    },
     "1632419634acb9c9c5": {
       "type": "include-custom-html-largeheader",
       "settings": {
@@ -210,7 +180,7 @@
             "button_text": "コレクションを見る",
             "button_text_en": "VIEW THE COLLECTION",
             "button_text_cn": "查看藏品",
-            "button_link": "https:\/\/fumikoda.jp\/products\/billy",
+            "button_link": "",
             "apply_overlay": true
           }
         },
@@ -349,15 +319,45 @@
         "3b16b5b9-64f6-4da4-b564-dc3177326374"
       ],
       "settings": {
-        "title": "",
-        "title_en": "",
-        "title_cn": "",
+        "title": "COLLECTION",
+        "title_en": "COLLECTION",
+        "title_cn": "收藏品",
         "image_size": "normal",
         "add_spacing": true,
         "expand_collection": false,
         "stack_on_mobile": false,
         "text_color": "#ffffff",
         "button_color": "#363636"
+      }
+    },
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "3238de14-408f-4bc4-9949-4a4a9a9768ba": {
+          "type": "collection",
+          "settings": {
+            "collection": "renewal-features",
+            "title": "FEATURES",
+            "title_en": "FEATURES",
+            "title_cn": "特点",
+            "grid_items_count": 8,
+            "button_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "3238de14-408f-4bc4-9949-4a4a9a9768ba"
+      ],
+      "settings": {
+        "title": "FEATURES",
+        "title_en": "FEATURES",
+        "title_cn": "特点",
+        "layout_mode": "carousel",
+        "show_product_info": true,
+        "show_vendor": false,
+        "show_color_swatch": true,
+        "grid_mobile_items_per_row": "1",
+        "grid_desktop_items_per_row": 4
       }
     },
     "1633443693c4dbffc5": {
@@ -593,9 +593,9 @@
   "order": [
     "slideshow",
     "1632419307e96c560a",
-    "featured-collections",
     "1632419634acb9c9c5",
     "collection-list",
+    "featured-collections",
     "1633443693c4dbffc5",
     "1632419830cb069583",
     "163310207706140ea2",

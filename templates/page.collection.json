@@ -19,20 +19,20 @@
             "button_link": "shopify:\/\/pages\/black-collection"
           }
         },
-        "02b58663-d66b-411b-b385-38cd33378d67": {
+        "91e4a45a-89a0-4888-b58e-b83ef9d2e833": {
           "type": "collection",
           "settings": {
-            "image": "shopify:\/\/shop_images\/main03.png",
+            "image": "shopify:\/\/shop_images\/IMG_3708_1024x1024_759990e5-0153-4e4b-8558-4bedb35a1711.png",
             "image_alignment": "center center",
             "content_position": "bottomLeft",
             "subheading": "",
-            "title": "JUTE COLLECTION",
+            "title": "LACE COLLECTION",
             "title_en": "",
             "title_cn": "",
             "button_text": "コレクションを見る",
             "button_text_en": "View the collection",
             "button_text_cn": "查看藏品",
-            "button_link": "shopify:\/\/collections"
+            "button_link": "shopify:\/\/pages\/lace-collection"
           }
         },
         "d58116df-42df-483c-b68d-48f20af18f2a": {
@@ -100,22 +100,6 @@
             "button_link": "shopify:\/\/pages\/pink-collection"
           }
         },
-        "91e4a45a-89a0-4888-b58e-b83ef9d2e833": {
-          "type": "collection",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/IMG_3708_1024x1024_759990e5-0153-4e4b-8558-4bedb35a1711.png",
-            "image_alignment": "center center",
-            "content_position": "bottomLeft",
-            "subheading": "",
-            "title": "LACE COLLECTION",
-            "title_en": "",
-            "title_cn": "",
-            "button_text": "コレクションを見る",
-            "button_text_en": "View the collection",
-            "button_text_cn": "查看藏品",
-            "button_link": "shopify:\/\/pages\/lace-collection"
-          }
-        },
         "3eecd115-ad8a-41be-92f1-c24da2465e11": {
           "type": "collection",
           "disabled": true,
@@ -170,12 +154,11 @@
       },
       "block_order": [
         "7c1540b7-3e8d-4b43-a690-0882604b77ef",
-        "02b58663-d66b-411b-b385-38cd33378d67",
+        "91e4a45a-89a0-4888-b58e-b83ef9d2e833",
         "d58116df-42df-483c-b68d-48f20af18f2a",
         "43a3330e-3aa7-49b1-b42e-428d8f071340",
         "34b3352a-6873-4543-8de6-15c585849c7c",
         "50561e1f-80f3-48ac-980f-e1ee970cd6b2",
-        "91e4a45a-89a0-4888-b58e-b83ef9d2e833",
         "3eecd115-ad8a-41be-92f1-c24da2465e11",
         "bcc4d0f1-50e0-4b79-b8a2-cc1e4f67a014",
         "10a1ed15-4c2c-4566-b32a-5712c0348ed2"

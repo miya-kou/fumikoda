@@ -470,19 +470,5 @@
       "signup_form_success": "We will send you an email right before we open!",
       "password_link": "Enter using password"
     }
-  },
-  "shopify": {
-    "checkout": {
-      "payment_gateway": {
-        "credit_card_label": "クレジットカード（即時決済）",
-        "bank_deposit_label": "銀行振込（注文完了後7日以内）",
-        "cash_on_delivery_label": "代金引換（商品到着時にお支払い）"
-      }
-    },
-    "notices": {
-      "order": {
-        "cash_on_delivery": "代金引換（商品到着時にお支払い）"
-      }
-    }
   }
 }

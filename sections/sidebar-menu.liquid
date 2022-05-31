@@ -1036,11 +1036,11 @@
                               <div class="c-header__dropdown__imglist__textbox">
                                 <p class="c-header__dropdown__imglist__name--jp">
 									{%- if request.locale.iso_code == 'en' -%}
-										Code Band(S)
+										Code Band
 									{%- elsif request.locale.iso_code == 'zh-CN' -%}
-										绳带(S)
+										绳带
 									{%- else -%}
-										コードバンド(S)
+										コードバンド
 									{%- endif -%}
                                 </p>
                                 <p class="c-header__dropdown__imglist__price">
@@ -1186,34 +1186,37 @@
 							</li>
 							<!-- /.c-header__dropdown__imglist__item -->
 
-                            <li class="c-header__dropdown__imglist__item">
-                                <a href="{{ locale_url }}products/cordband-handicapped">
-                                  <figure class="c-header__dropdown__imglist__item__img">
-                                    <img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド">
-                                  </figure>
-                                  <div class="c-header__dropdown__imglist__textbox">
-                                    <p class="c-header__dropdown__imglist__name--jp">
-                                        {%- if request.locale.iso_code == 'en' -%}
-                                            Code Band(S)
-                                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
-                                            绳带(S)
-                                        {%- else -%}
-                                            コードバンド(S)
-                                        {%- endif -%}
-                                    </p>
-                                    <p class="c-header__dropdown__imglist__price">
-                                      {% assign collection_handle = "social-support" %}
-                                      {% assign product_handle = "cordband-handicapped" %}
-                                      {%- assign product_list = collections[collection_handle].products -%}
-                                      {% for p in product_list %}
-                                        {% if p.handle == product_handle %}
-                                            {{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
-                                        {% endif %}
-                                      {% endfor %}
-                                    </p>
-                                  </div>
-                                </a>
-                              </li>
+{% comment %}
+<!-- 2022/2/21 クライアント指示に伴いメニュー項目を削除 [[ -->
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/cordband-upcycle-s">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-upcycle-s.jpg?v=1643092124" alt="コードバンド(S)"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+											{%- if request.locale.iso_code == 'en' -%}
+												Cord bands(S)
+											{%- elsif request.locale.iso_code == 'zh-CN' -%}
+												代码带(S)
+											{%- else -%}
+												コードバンド(S)
+											{%- endif -%}
+										</p>
+											<p class="c-header__dropdown__imglist__price">
+												{% assign collection_handle = "upcycling" %}
+												{% assign product_handle = "cordband-upcycle-s" %}
+												{%- assign product_list = collections[collection_handle].products -%}
+												{% for p in product_list %}
+													{% if p.handle == product_handle %}
+														{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+													{% endif %}
+												{% endfor %}
+											</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+<!-- ]] 2022/2/21 クライアント指示に伴いメニュー項目を削除 -->
+{% endcomment %}
 
 							<li class="c-header__dropdown__imglist__item">
 								<a href="{{ locale_url }}products/cordband-upcycle">
@@ -1774,34 +1777,37 @@
 							</li>
 							<!-- /.c-header__dropdown__imglist__item -->
 
-                            <li class="c-header__dropdown__imglist__item">
-                                <a href="{{ locale_url }}products/cordband-handicapped">
-                                  <figure class="c-header__dropdown__imglist__item__img">
-                                    <img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド">
-                                  </figure>
-                                  <div class="c-header__dropdown__imglist__textbox">
-                                    <p class="c-header__dropdown__imglist__name--jp">
-                                        {%- if request.locale.iso_code == 'en' -%}
-                                            Code Band(S)
-                                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
-                                            绳带(S)
-                                        {%- else -%}
-                                            コードバンド(S)
-                                        {%- endif -%}
-                                    </p>
-                                    <p class="c-header__dropdown__imglist__price">
-                                      {% assign collection_handle = "social-support" %}
-                                      {% assign product_handle = "cordband-handicapped" %}
-                                      {%- assign product_list = collections[collection_handle].products -%}
-                                      {% for p in product_list %}
-                                        {% if p.handle == product_handle %}
-                                            {{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
-                                        {% endif %}
-                                      {% endfor %}
-                                    </p>
-                                  </div>
-                                </a>
-                              </li>
+{% comment %}
+<!-- 2022/2/21 クライアント指示に伴いメニュー項目を削除 [[ -->
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/cordband-upcycle-s">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-upcycle-s.jpg?v=1643092124" alt="コードバンド(S)"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+											{%- if request.locale.iso_code == 'en' -%}
+												Cord bands(S)
+											{%- elsif request.locale.iso_code == 'zh-CN' -%}
+												代码带(S)
+											{%- else -%}
+												コードバンド(S)
+											{%- endif -%}
+										</p>
+											<p class="c-header__dropdown__imglist__price">
+												{% assign collection_handle = "upcycling" %}
+												{% assign product_handle = "cordband-upcycle-s" %}
+												{%- assign product_list = collections[collection_handle].products -%}
+												{% for p in product_list %}
+													{% if p.handle == product_handle %}
+														{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+													{% endif %}
+												{% endfor %}
+											</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+<!-- ]] 2022/2/21 クライアント指示に伴いメニュー項目を削除 -->
+{% endcomment %}
 
 							<li class="c-header__dropdown__imglist__item">
 								<a href="{{ locale_url }}products/cordband-upcycle">
@@ -1910,11 +1916,11 @@
                               <div class="c-header__dropdown__imglist__textbox">
                                 <p class="c-header__dropdown__imglist__name--jp">
 									{%- if request.locale.iso_code == 'en' -%}
-										Code Band(S)
+										Code Band
 									{%- elsif request.locale.iso_code == 'zh-CN' -%}
-										绳带(S)
+										绳带
 									{%- else -%}
-										コードバンド(S)
+										コードバンド
 									{%- endif -%}
                                 </p>
                                 <p class="c-header__dropdown__imglist__price">

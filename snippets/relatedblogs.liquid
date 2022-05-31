@@ -139,7 +139,7 @@
                     {%- endif -%}
             <div class="rb_blog-grid">
                               {%- if article.image -%}
-                  <a href="{{ article.url }}"><img src="{{ article.image.src | img_url: '2048x2048' }}" alt="{{ article.title }}"/></a>
+                  <a href="{{ article.url }}"><img src="{{ article.image.src | img_url: '1024x1024' }}" alt="{{ article.title }}"/></a>
                 {%- else -%}
                   <div class="rb_no_image"></div>
                 {%- endif -%}
@@ -178,15 +178,7 @@
 {%- endif -%}
 
   <style>
-              .rb_contents span {
-     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden; 
-} 
-.rb_blog-grid  a img{
-   max-heigh: 1px;
-}              .rb_blog-grid{
+    .rb_blog-grid{
     float: left;
     width: 32%;
     margin-right: 2%;
@@ -194,10 +186,16 @@
   #relatedblogs .rb_blog-grid:nth-of-type(3), #relatedblogs .rb_blog-grid:nth-of-type(6){margin-right:0px;}
   #relatedblogs .rb_blog-grid:nth-of-type(4), #relatedblogs .rb_blog-grid:nth-of-type(7) { clear:left }
     .rb_title a {
-    color: #333333;
+    color: white;
+    font-weight: bold;
+  }
+  .rb_row h3{
+    color: white;
+    text-align: center;
+    display: none;
   }
   .rb_title a:hover {
-    color: #333333;opacity: 1;
+    color: white;opacity: 1;
   }
   .rb_title{margin-top: 10px;}
   .blog_meta {
@@ -221,10 +219,10 @@
     text-align: left;
   }
   .rb_continue_button {
-    color: #333333;
-    border-color: #333333;
+    color: white;
+    border-color: white;
     background-color: transparent;
-    border: 1px solid #333333;
+    border: 1px solid white;
     transition: background-color 0.2s linear, color 0.2s linear;
     margin: 25px 0;
     padding: 0 20px;
@@ -234,7 +232,7 @@
     height: 40px;
     line-height: 1.2;
     vertical-align: top;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 15px;
     display: inline-flex;
     -webkit-box-align: center;
@@ -242,9 +240,9 @@
     -webkit-box-pack: center;text-transform: uppercase;
     letter-spacing: 1px;
   }.rb_continue_button:hover {
-    border-color: #333333;
-    background-color: #333333;
-    color: #fff;
+    border-color: white;
+    background-color: white;
+    color: black;
     opacity: 1;
   }
   @media(max-width: 800px) {

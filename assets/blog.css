@@ -125,3 +125,31 @@
 .Rte table {
   font-size: 16px;
 }
+
+
+
+/**
+ * ----------------------------------------------------------------------------
+ * 追加修正
+ * ----------------------------------------------------------------------------
+ * 対象アプリ：related blog bost
+ * 関連task：https://www.notion.so/8d107fa33b104b8696d7ef6f50afc287
+ * ----------------------------------------------------------------------------
+ */
+
+.rb_contents span {
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden; 
+    color: white;
+} 
+.rb_blog-grid  a img{
+  height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+.blog_posts{
+  background-color: #000;
+}
+
