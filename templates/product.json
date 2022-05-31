@@ -1,0 +1,136 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "product_meta": {
+          "type": "product_meta",
+          "settings": {
+            "show_vendor": false,
+            "show_sku": false,
+            "show_product_rating": false,
+            "show_taxes_included": false
+          }
+        },
+        "variant_selector": {
+          "type": "variant_selector",
+          "settings": {
+            "show_color_swatch": true,
+            "show_color_carousel": false
+          }
+        },
+        "d3015250-18b7-49cd-ad09-d80af1f2bada": {
+          "type": "shopify:\/\/apps\/infinite-options-by-shoppad\/blocks\/app-block\/7e73b6f9-82b0-45f5-9b9b-04f446ba1a9b",
+          "settings": {
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {
+            "show_label": true
+          }
+        },
+        "ff044b75-9b70-43e1-8ae6-b3e3815e7fff": {
+          "type": "inventory",
+          "settings": {
+            "inventory_quantity_threshold": 3
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_price_in_button": false,
+            "show_payment_button": false
+          }
+        },
+        "bba3b0c9-8b3e-4d0f-8323-e503e30ea37a": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_liquid": "<div class=\"ProductMeta__Text-links\">\n<a href=\"\/pages\/gift-wrapping\">{%- if request.locale.iso_code == 'en' -%}Gift wrapping{%- elsif request.locale.iso_code == 'zh-CN' -%}礼品包装{%- else -%}ギフトラッピング{%- endif -%}<\/a><a href=\"\/pages\/rental\">{%- if request.locale.iso_code == 'en' -%}Rental Services{%- elsif request.locale.iso_code == 'zh-CN' -%}租赁服务{%- else -%}レンタルサービス{%- endif -%}<\/a>\n<\/div>"
+          }
+        },
+        "share_buttons": {
+          "type": "share_buttons",
+          "settings": {
+          }
+        },
+        "5944a2d9-2579-4978-8f4b-e22911f68919": {
+          "type": "content_liquid",
+          "settings": {
+            "title": "素材・サイズ等",
+            "title_en": "Material, size, etc.",
+            "title_cn": "材料、尺寸等。",
+            "content": "{% assign materialsize = product.metafields.my_fields.product_materialsize %}\n{% assign materialsize_en = product.metafields.my_fields.product_materialsize_en %}\n{% assign materialsize_zh_cn = product.metafields.my_fields.product_materialsize_zh_cn %}\n\n{%- if request.locale.iso_code == 'en' and materialsize_en-%}\n    {{ materialsize_en }}\n{%- elsif request.locale.iso_code == 'zh-CN' and materialsize_en -%}\n    {{ materialsize_zh_cn }}\n{%- else -%}\n    {{ materialsize }}\n{%- endif -%}"
+          }
+        },
+        "f6c912bc-8757-43a2-9f31-ee763fae9ae8": {
+          "type": "content_html",
+          "settings": {
+            "title": "配送・お支払い方法",
+            "title_en": "Shipping and Payment Methods",
+            "title_cn": "运输和支付方式",
+            "content": "<dl class=\"p-infoList\">\n<dt>配送について<\/dt>\n<dd>\n<ul>\n<li>1回のご注文金額合計が33,000円（税込）未満の場合は、全国一律907円（税込）となります。<\/li>\n<li>33,000円（税込）以上の場合は、送料無料とさせていただきます。<\/li>\n<li>お届け日のご指定が無い場合は、ご注文後3営業日以内に発送いたします。<\/li>\n<li>国内配送はクロネコヤマトのみとなります。<\/li>\n<\/ul>\n<p>詳しくは<a href=\"\/pages\/faq\">よくあるご質問<\/a>をご確認ください。<\/p>    \n<\/dd>\n<dt>支払い方法について<\/dt>\n<dd>\n<ul>\n<li>クレジットカード決済（VISA、Master Card、American Express）<\/li>\n<li>AmazonPay<\/li>\n<li>コンビニ決済<\/li>\n<\/ul>\n<\/dd>\n<\/dl>",
+            "content_en": "<dl class=\"p-infoList\">\n<dt>Shipping Information<\/dt>\n<dd>\n<ul>\n<li>If the total amount of your order is less than 30,000 yen (excluding tax), the shipping fee will be 825 yen (excluding tax).<\/li>\n<li>Free shipping is available for orders over 30,000 yen (excluding tax).<\/li>\n<li>If you do not specify a delivery date, your order will be shipped within 3 business days.<\/li>\n<li>Domestic delivery is by Kuroneko Yamato only.<\/li>\n<\/ul>\n<p>For more information, please check the <a href=\"\/pages\/faq\">FAQ<\/a>.<\/p>    \n<\/dd>\n<dt>About payment methods<\/dt>\n<dd>\n<ul>\n<li>Credit card payment (VISA, Master Card, American Express)<\/li>\n<li>AmazonPay<\/li>\n<li>Convenience store payment<\/li>\n<\/ul>\n<\/dd>\n<\/dl>",
+            "content_cn": "<dl class=\"p-infoList\">\n<dt>运输信息<\/dt>\n<dd>\n<ul>\n<li>如果您的订单总额低于30,000日元（不含税），运费将为825日元（不含税）。<\/li>\n<li>如果您的订单总价值低于30,000日元（不含税），将免费送货。<\/li>\n<li>如果您没有指定交货日期，您的订单将在3个工作日内发货。<\/li>\n<li>国内送货只由仓根子大和负责。<\/li>\n<\/ul>\n<p>请查看我们的<a href=\"\/pages\/faq\">常见问题<\/a>以了解更多信息。<\/p>    \n<\/dd>\n<dt>付款方式<\/dt>\n<dd>\n<ul>\n<li>信用卡支付（VISA、Master Card、American Express）。<\/li>\n<li>亚马逊支付<\/li>\n<li>在便利店付款<\/li>\n<\/ul>\n<\/dd>\n<\/dl>"
+          }
+        },
+        "9671be65-7fe5-4a4e-93aa-519f17179dd0": {
+          "type": "content_liquid",
+          "settings": {
+            "title": "アイテム紹介",
+            "title_en": "Item Introduction",
+            "title_cn": "项目介绍",
+            "content": "{{- product.description -}}"
+          }
+        }
+      },
+      "block_order": [
+        "product_meta",
+        "variant_selector",
+        "d3015250-18b7-49cd-ad09-d80af1f2bada",
+        "quantity_selector",
+        "ff044b75-9b70-43e1-8ae6-b3e3815e7fff",
+        "buy_buttons",
+        "bba3b0c9-8b3e-4d0f-8323-e503e30ea37a",
+        "share_buttons",
+        "5944a2d9-2579-4978-8f4b-e22911f68919",
+        "f6c912bc-8757-43a2-9f31-ee763fae9ae8",
+        "9671be65-7fe5-4a4e-93aa-519f17179dd0"
+      ],
+      "settings": {
+        "image_size": "large",
+        "stack_images": false,
+        "show_thumbnails": true,
+        "enable_image_zoom": true,
+        "enable_video_looping": false
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "title": "最近見た商品",
+        "title_en": "Recently viewed products",
+        "title_cn": "最近查看的产品",
+        "show_product_info": true,
+        "show_vendor": false,
+        "show_color_swatch": false
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "show_product_info": true,
+        "show_vendor": false,
+        "show_color_swatch": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recently-viewed-products",
+    "product-recommendations"
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "f31bb28e-143f-4ab3-933d-a266b2dabc61": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/PC01.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/SP01.jpg",
+            "apply_overlay": true,
+            "content_position": "bottomCenter",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "MEN",
+            "button_1_text_en": "MEN",
+            "button_1_text_cn": "男士",
+            "button_1_link": "https:\/\/fumikoda.jp\/pages\/men",
+            "button_2_text": "WOMEN",
+            "button_2_text_en": "WOMEN",
+            "button_2_text_cn": "女性",
+            "button_2_link": "https:\/\/fumikoda.jp\/pages\/women"
+          }
+        },
+        "slide-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/billy-PC02.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/billy-SP92.jpg",
+            "apply_overlay": false,
+            "content_position": "bottomCenter",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "BILLY",
+            "button_1_text_en": "BILLY",
+            "button_1_text_cn": "BILLY",
+            "button_1_link": "https:\/\/fumikoda.jp\/products\/billy",
+            "button_2_text": "",
+            "button_2_text_en": "",
+            "button_2_text_cn": "",
+            "button_2_link": ""
+          }
+        },
+        "77282a2f-9cbd-41dd-95c7-61dc9833a7e9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/alex-PC03.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/alex-SP03.jpg",
+            "apply_overlay": true,
+            "content_position": "bottomCenter",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "ALEX",
+            "button_1_text_en": "ALEX",
+            "button_1_text_cn": "ALEX",
+            "button_1_link": "https:\/\/fumikoda.jp\/products\/alex",
+            "button_2_text": "",
+            "button_2_text_en": "",
+            "button_2_text_cn": "",
+            "button_2_link": ""
+          }
+        },
+        "fc7bb05f-bd7b-439f-983c-4fcb474db54d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/arianna-PC04.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/arianna-SP04.jpg",
+            "apply_overlay": false,
+            "content_position": "bottomCenter",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "ARIANNA",
+            "button_1_text_en": "ARIANNA",
+            "button_1_text_cn": "ARIANNA",
+            "button_1_link": "https:\/\/fumikoda.jp\/products\/arianna",
+            "button_2_text": "",
+            "button_2_text_en": "",
+            "button_2_text_cn": "",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "f31bb28e-143f-4ab3-933d-a266b2dabc61",
+        "slide-0",
+        "77282a2f-9cbd-41dd-95c7-61dc9833a7e9",
+        "fc7bb05f-bd7b-439f-983c-4fcb474db54d"
+      ],
+      "settings": {
+        "show_fullscreen": false,
+        "show_arrow": false,
+        "autoplay": true,
+        "cycle_speed": 5,
+        "text_color": "#ffffff",
+        "button_color": "#363636",
+        "button_background": "#ffffff"
+      }
+    },
+    "1632419307e96c560a": {
+      "type": "include-blog-posts-3items",
+      "blocks": {
+        "1632419307e96c560a-0": {
+          "type": "blog",
+          "settings": {
+            "blog": "news"
+          }
+        }
+      },
+      "block_order": [
+        "1632419307e96c560a-0"
+      ],
+      "settings": {
+        "subheading": "",
+        "title": "NEWS",
+        "show_category": false,
+        "button_link": "shopify:\/\/blogs\/news",
+        "button_text": "もっと見る",
+        "button_text_en": "MORE",
+        "button_text_cn": "更多"
+      }
+    },
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "3238de14-408f-4bc4-9949-4a4a9a9768ba": {
+          "type": "collection",
+          "settings": {
+            "collection": "renewal-features",
+            "title": "FEATURES",
+            "title_en": "FEATURES",
+            "title_cn": "特点",
+            "grid_items_count": 8,
+            "button_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "3238de14-408f-4bc4-9949-4a4a9a9768ba"
+      ],
+      "settings": {
+        "title": "FEATURES",
+        "title_en": "FEATURES",
+        "title_cn": "特点",
+        "layout_mode": "carousel",
+        "show_product_info": true,
+        "show_vendor": false,
+        "show_color_swatch": true,
+        "grid_mobile_items_per_row": "1",
+        "grid_desktop_items_per_row": 4
+      }
+    },
+    "1632419634acb9c9c5": {
+      "type": "include-custom-html-largeheader",
+      "settings": {
+        "html": "WOMEN",
+        "html_en": "WOMEN",
+        "html_cn": "妇女"
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "collection-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "shoulder-bag",
+            "image": "shopify:\/\/shop_images\/ARIANNA_BK_talaoka05.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "ショルダーバッグ",
+            "title_en": "SHOULDER BAG",
+            "title_cn": "单肩包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "tote",
+            "image": "shopify:\/\/shop_images\/ALEX_LOG02.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "トートバッグ",
+            "title_en": "TOTE BAG",
+            "title_cn": "手提袋",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "rucksuck",
+            "image": "shopify:\/\/shop_images\/BILLY_MBE03.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リュック",
+            "title_en": "RUCKSACK",
+            "title_cn": "肩背式背包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "https:\/\/fumikoda.jp\/products\/billy",
+            "apply_overlay": true
+          }
+        },
+        "173f99de-0a4e-4d51-bda2-03ed90a8e10d": {
+          "type": "collection",
+          "settings": {
+            "collection": "bag-accessories",
+            "image": "shopify:\/\/shop_images\/tala.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "バッグアクセサリー",
+            "title_en": "BAG ACCESSORIES",
+            "title_cn": "包袋配件",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "90c79d37-f033-46c0-b019-a5930dba2971": {
+          "type": "collection",
+          "settings": {
+            "collection": "purse",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "財布",
+            "title_en": "WALLET",
+            "title_cn": "钱包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "79cab033-9acd-412b-a836-8c3d15399ccc": {
+          "type": "collection",
+          "settings": {
+            "collection": "goods",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "小物アイテム",
+            "title_en": "SMALL ITEMS",
+            "title_cn": "小件物品",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "1e6e9ce1-3335-4296-acbe-eda3f87a4cea": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アクセサリー",
+            "title_en": "ACCESSORIES",
+            "title_cn": "配件",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "4660304d-bef3-4d57-adf2-0e757d55d22c": {
+          "type": "collection",
+          "settings": {
+            "collection": "upcycling",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アップサイクル",
+            "title_en": "UPCYCLING",
+            "title_cn": "升级改造",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "cddf98c4-941e-48d2-96a6-c4a29b334775": {
+          "type": "collection",
+          "settings": {
+            "collection": "social-support",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "障がい者雇用支援",
+            "title_en": "Employment support for people with disabilities",
+            "title_cn": "对残疾人的就业支持",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        },
+        "3b16b5b9-64f6-4da4-b564-dc3177326374": {
+          "type": "collection",
+          "settings": {
+            "collection": "recycling",
+            "image": "shopify:\/\/shop_images\/image01.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リサイクル",
+            "title_en": "RECYCLING",
+            "title_cn": "回收利用",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "",
+            "apply_overlay": true
+          }
+        }
+      },
+      "block_order": [
+        "collection-0",
+        "collection-1",
+        "collection-2",
+        "173f99de-0a4e-4d51-bda2-03ed90a8e10d",
+        "90c79d37-f033-46c0-b019-a5930dba2971",
+        "79cab033-9acd-412b-a836-8c3d15399ccc",
+        "1e6e9ce1-3335-4296-acbe-eda3f87a4cea",
+        "4660304d-bef3-4d57-adf2-0e757d55d22c",
+        "cddf98c4-941e-48d2-96a6-c4a29b334775",
+        "3b16b5b9-64f6-4da4-b564-dc3177326374"
+      ],
+      "settings": {
+        "title": "",
+        "title_en": "",
+        "title_cn": "",
+        "image_size": "normal",
+        "add_spacing": true,
+        "expand_collection": false,
+        "stack_on_mobile": false,
+        "text_color": "#ffffff",
+        "button_color": "#363636"
+      }
+    },
+    "1633443693c4dbffc5": {
+      "type": "include-pickup-items",
+      "blocks": {
+        "26b4ca90-6a0c-40b0-9888-ba03c5f41749": {
+          "type": "product",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/MEN_ALEX.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "title": "ALEX トートバッグ",
+            "title_en": "ALEX: Tote Bag",
+            "title_cn": "ALEX手提袋",
+            "button_text": "商品を見る",
+            "button_text_en": "VIEW THE PRODUCT",
+            "button_text_cn": "查看产品",
+            "button_link": "\/products\/alex?variant=41723453210787",
+            "apply_overlay": true
+          }
+        },
+        "329eb437-3e32-4f77-9bc5-b6355ae179f2": {
+          "type": "product",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/MEN_BILLY3.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "title": "BILLY 2wayリュック",
+            "title_en": "BILLY: 2 way backpack",
+            "title_cn": "BILLY 双向背包",
+            "button_text": "商品を見る",
+            "button_text_en": "VIEW THE PRODUCT",
+            "button_text_cn": "查看产品",
+            "button_link": "\/products\/billy?variant=41729729691811",
+            "apply_overlay": true
+          }
+        },
+        "34ffd7bc-14ea-4f6a-8fb5-5a81825ed029": {
+          "type": "product",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/M_FELIX_IV02.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "title": "FELIX 4wayミニショルダーバッグ",
+            "title_en": "FELIX: 4WAY mini shoulder bag (S)",
+            "title_cn": "FELIX: 4WAY迷你单肩包 (S)",
+            "button_text": "商品を見る",
+            "button_text_en": "VIEW THE PRODUCT",
+            "button_text_cn": "查看产品",
+            "button_link": "https:\/\/fumikoda.jp\/products\/felix?variant=41729940586659",
+            "apply_overlay": true
+          }
+        },
+        "669a2a9c-7e27-4ff5-bd68-9fa588fa2563": {
+          "type": "product",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/MEN_EDDY3.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "title": "EDDY 3wayマルチショルダーバッグ",
+            "title_en": "EDDY: 3WAY Multi Shoulder Bag (M)",
+            "title_cn": "EDDY三向多肩包",
+            "button_text": "商品を見る",
+            "button_text_en": "VIEW THE PRODUCT",
+            "button_text_cn": "查看产品",
+            "button_link": "\/products\/eddy?variant=41729906606243",
+            "apply_overlay": true
+          }
+        }
+      },
+      "block_order": [
+        "26b4ca90-6a0c-40b0-9888-ba03c5f41749",
+        "329eb437-3e32-4f77-9bc5-b6355ae179f2",
+        "34ffd7bc-14ea-4f6a-8fb5-5a81825ed029",
+        "669a2a9c-7e27-4ff5-bd68-9fa588fa2563"
+      ],
+      "settings": {
+        "title": "MEN",
+        "title_en": "MENS",
+        "title_cn": "绅士",
+        "image_size": "normal",
+        "add_spacing": true,
+        "text_color": "#ffffff",
+        "button_color": "#363636",
+        "button_morelink": "shopify:\/\/collections\/men",
+        "button_moretext": "もっと見る",
+        "button_moretext_en": "MORE",
+        "button_moretext_cn": "更多"
+      }
+    },
+    "1632419830cb069583": {
+      "type": "include-concept-slideshow",
+      "blocks": {
+        "1632419830cb069583-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/kv-concept_f0df75b8-891d-4164-b9a8-0adededdc7dc.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/CONCEPT-SP.jpg",
+            "apply_overlay": false,
+            "content_position": "middleCenter",
+            "subheading": "",
+            "subheading_en": "",
+            "subheading_cn": "",
+            "title": "SMART COMFORT",
+            "title_en": "SMART COMFORT",
+            "title_cn": "为职业女性提供的功能性美容",
+            "button_1_text": "詳細を見る",
+            "button_1_text_en": "MORE",
+            "button_1_text_cn": "更多",
+            "button_1_link": "shopify:\/\/pages\/concept",
+            "button_2_text": "",
+            "button_2_text_en": "MORE",
+            "button_2_text_cn": "更多",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "1632419830cb069583-0"
+      ],
+      "settings": {
+        "title": "CONCEPT",
+        "title_en": "CONCEPT",
+        "title_cn": "构想",
+        "show_fullscreen": false,
+        "show_arrow": false,
+        "autoplay": false,
+        "cycle_speed": 5,
+        "text_color": "#ffffff",
+        "button_color": "#363636",
+        "button_background": "#ffffff"
+      }
+    },
+    "163310207706140ea2": {
+      "type": "include-blog-posts-5items",
+      "blocks": {
+        "ca3dbded-3554-4cc0-91a9-678ab8cbfdd9": {
+          "type": "blog",
+          "settings": {
+            "blog": "journal"
+          }
+        }
+      },
+      "block_order": [
+        "ca3dbded-3554-4cc0-91a9-678ab8cbfdd9"
+      ],
+      "settings": {
+        "subheading": "",
+        "title": "JOURNAL",
+        "title_en": "JOURNAL",
+        "title_cn": "日志",
+        "show_category": true,
+        "button_link": "shopify:\/\/blogs\/journal",
+        "button_text": "もっと見る",
+        "button_text_en": "More",
+        "button_text_cn": "更多"
+      }
+    },
+    "1638342472fb8018a5": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "SHOP",
+        "title_en": "SHOP",
+        "title_cn": "商店",
+        "liquid": "<div class=\"c-shop\">\n<figure class=\"c-shop__image\"><img src=\"\/\/cdn.shopify.com\/s\/files\/1\/0593\/0890\/0561\/t\/2\/assets\/img-shop.jpg\" alt=\"SHOP\"><\/figure>\n<div class=\"c-shop__infobox\">\n<h3 class=\"c-shop__name\">{%- if request.locale.iso_code == 'en' -%}FUMIKODA Directly managed stores{%- elsif request.locale.iso_code == 'zh-CN' -%}富美科达直营店{%- else -%}FUMIKODA 直営店{%- endif -%}<\/h3>\n<p class=\"c-shop__info\">\n{%- if request.locale.iso_code == 'en' -%}[Address] Asahibashi Building 3F, 1-16-7 Aobadai, Meguro-ku, Tokyo<br><br>[Business Hours] Monday and Tuesday: Closed Wednesday, Thursday, Friday: 12:00-19:00 \/ Saturday, Sunday: 12:00-18:00 Saturday and Sunday: 12:00-18:00{%- elsif request.locale.iso_code == 'zh-CN' -%}[地址］<br>\n东京都目黑区青叶台1-16-7旭桥大厦3层<br><br>\n[营业时间］<br>\n周一和周二。休息 <br>\n周三、周四、周五：12:00-19:00 \/ 周六、周日：12:00-18:00 <br>\n周六和周日：12:00-18:00{%- else -%}東京都目黒区青葉台1-16-7 朝日橋ビル3F<br>\n03-5459-2730<br><br>\n【営業時間】<br>\n月・火：休業<br>\n水・木・金曜日：12:00-19:00<br>\n土・日曜日：12:00-18:00{%- endif -%}\n<\/p>\n<\/div>\n<\/div>\n<div class=\"SectionFooter u-margin_adjust\">\n<a href=\"\/pages\/shop\" class=\"Button Button--primary c-btn\">{%- if request.locale.iso_code == 'en' -%}More{%- elsif request.locale.iso_code == 'zh-CN' -%}更多{%- else -%}もっと見る{%- endif -%}\n<\/a>\n<\/div>"
+      }
+    },
+    "16383425093b7febf2": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "INSTAGRAM",
+        "title_en": "INSTAGRAM",
+        "title_cn": "INSTAGRAM",
+        "liquid": "<div class=\"c-instagram\"><covet-pics-widget gallery-embed-id=\"203586\"><\/covet-pics-widget><\/div>\n<div class=\"SectionFooter\"><a href=\"https:\/\/www.instagram.com\/fumikoda.official\/\" target=\"_blank\" class=\"Button Button--primary c-btn\">{%- if request.locale.iso_code == 'en' -%}More{%- elsif request.locale.iso_code == 'zh-CN' -%}更多{%- else -%}もっと見る{%- endif -%}<\/a><\/div>"
+      }
+    },
+    "16326395278bcbebbc": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "text_color": "#000000",
+        "button_color": "#000000",
+        "subheading": "",
+        "title": "CLUB FUMIKODA",
+        "image": "shopify:\/\/shop_images\/img-newsletter.png",
+        "content": "<p>「FUMIKODA JOURNAL」やスペシャルイベントのご案内などをメールでお届けいたします。<\/p><p>FUMIKODAの人気商品が当たる「プレゼントキャンペーン」にもご応募いただけます。<\/p>",
+        "content_en": "<p>You can receive articles from the FUMIKODA JOURNAL, special event announcements, and other information via e-mail, and you can also apply for the \"Present Campaign\" to win popular FUMIKODA products.<\/p>",
+        "content_cn": "<p>您可以通过电子邮件收到《富美家杂志》的文章、特别活动通知和其他信息，您还可以申请参加 \"礼物活动\"，赢取受欢迎的富美家产品。<\/p>"
+      }
+    },
+    "1638344807cf2a6aa4": {
+      "type": "newsletter",
+      "settings": {
+        "text_color": "#000000",
+        "button_color": "#000000",
+        "subheading": "",
+        "title": "CLUB FUMIKODA",
+        "image": "shopify:\/\/shop_images\/img-newsletter_a79c225c-7b34-4280-ba6b-d27e7fe664e8.png",
+        "content": "<p>「FUMIKODA JOURNAL」やスペシャルイベントのご案内などをメールでお届けいたします。<\/p><p>FUMIKODAの人気商品が当たる「プレゼントキャンペーン」にもご応募いただけます。<\/p>",
+        "content_en": "<p>You can receive articles from the FUMIKODA JOURNAL, special event announcements, and other information via e-mail, and you can also apply for the \"Present Campaign\" to win popular FUMIKODA products.<\/p>",
+        "content_cn": "<p>您可以通过电子邮件收到《富美家杂志》的文章、特别活动通知和其他信息，您还可以申请参加 \"礼物活动\"，赢取受欢迎的富美家产品。<\/p>"
+      }
+    },
+    "164136239651fc403d": {
+      "type": "custom-html",
+      "settings": {
+        "subheading": "",
+        "title": "INSTAGRAM",
+        "html": "<style>\n#section-template--15261494771875__164136239651fc403d {\n    margin: 0;\n    padding: 120px 0 0;\n}\n#section-template--15261494771875__164136239651fc403d .SectionHeader SectionHeader--center {\n    margin-bottom: 40px;\n}\n#shopify-section-template--15261494771875__social_widget_36665 {\n    margin-bottom: 0;\n}\n#section-template--15261494771875__16413635758902868d {\npadding: 0 0 120px;\n}\n@media screen and (max-width: 768px) {\n    #section-template--15261494771875__164136239651fc403d {\n        margin: 0;\n        padding: 80px 0 0;\n    }\n    #shopify-section-template--15261494771875__social_widget_36665 {\n        margin-bottom: 0;\n    }\n    #section-template--15261494771875__16413635758902868d {\n        padding: 0 0 80px;\n    }\n}\n<\/style>"
+      }
+    },
+    "social_widget_36665": {
+      "type": "social-widget",
+      "settings": {
+        "social_widget_id": "36665",
+        "social_product_id": "none",
+        "social_widget_type": "none"
+      }
+    },
+    "16413635758902868d": {
+      "type": "custom-html",
+      "settings": {
+        "subheading": "",
+        "title": "",
+        "html": "<div class=\"SectionFooter c-top__section__blogpost__btn\">\n        <a href=\"https:\/\/www.instagram.com\/fumikoda.official\/\" class=\"Button Button--primary u-small c-btn\" target=\"_blank\">もっと見る\n<\/a>\n      <\/div>"
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "1632419307e96c560a",
+    "featured-collections",
+    "1632419634acb9c9c5",
+    "collection-list",
+    "1633443693c4dbffc5",
+    "1632419830cb069583",
+    "163310207706140ea2",
+    "1638342472fb8018a5",
+    "16383425093b7febf2",
+    "16326395278bcbebbc",
+    "1638344807cf2a6aa4",
+    "164136239651fc403d",
+    "social_widget_36665",
+    "16413635758902868d"
+  ]
+}

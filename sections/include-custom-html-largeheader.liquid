@@ -1,0 +1,44 @@
+<div class="c-large_sectionheaderbox">
+  <h2 class="c-large_sectionheader">
+    {%- if request.locale.iso_code == 'en' -%}
+      {{ section.settings.html_en }}
+    {%- elsif request.locale.iso_code == 'zh-CN' -%}
+      {{ section.settings.html_cn }}
+    {%- else -%}
+      {{ section.settings.html }}
+    {%- endif -%}
+  </h2>
+</div>
+
+{% schema %}
+{
+  "name": "(TOP)Custom HTML",
+  "settings": [
+    {
+      "type": "html",
+      "id": "html",
+      "label": "HTML content",
+      "default": "<p>Write your own custom HTML content.</p>"
+    },
+    {
+      "type": "html",
+      "id": "html_en",
+      "label": "HTML content English",
+      "default": "<p>Write your own custom HTML content.</p>"
+    },
+    {
+      "type": "html",
+      "id": "html_cn",
+      "label": "HTML content Chinese",
+      "default": "<p>Write your own custom HTML content.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Advanced",
+      "name": "(TOP)Custom HTML",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

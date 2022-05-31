@@ -1,0 +1,361 @@
+<link rel="stylesheet" href="{{ 'custom-collections.css' | asset_url }}">
+
+{%- assign collection_count = 0 -%}
+{%- if section.settings.collections_to_show == 'all' -%}
+  {%- for collection in collections -%}
+    {%- unless collection.handle == 'frontpage' -%}
+      {%- assign collection_count = collection_count | plus: 1 -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- assign collection_count = section.blocks.size -%}
+{%- endif -%}
+
+{%- if collection_count == 0 -%}
+  <div class="EmptyState">
+    <div class="container">
+      <h3 class="EmptyState__Title Heading u-h5">{{ 'collection_list.general.empty_title' | t }}</h3>
+      <a href="{{ routes.root_url }}" class="EmptyState__Action Button Button--primary">{{ 'collection_list.general.empty_button' | t }}</a>
+    </div>
+  </div>
+{%- else -%}
+  <section id="section-{{ section.id }}" data-section-id="{{ section.id }}" class="c-collectionlists">
+    <header class="PageHeader">
+      <div class="SectionHeader SectionHeader--center">
+        <h1 class="SectionHeader__Heading Heading u-h1">
+          {%- if template == 'list-collections' -%}
+            {{- 'collection_list.general.title' | t -}}
+          {%- else -%}
+            {{- page.title -}}
+          {%- endif -%}
+        </h1>
+
+        {%- if request.page_type == 'page' and page.content != blank -%}
+          <div class="SectionHeader__Description">
+            {{- page.content -}}
+          </div>
+        {%- endif -%}
+      </div>
+    </header>
+
+    {% comment %}
+    {%- paginate collections by 48 -%}
+      <div class="CollectionList CollectionList--grid {% if section.settings.add_spacing %}CollectionList--spaced{% endif %}">
+        {%- if linklist.handle != blank -%}
+          {%- for link in linklist.links -%}
+            {%- if link.type != 'collection_link' -%}
+              {%- continue -%}
+            {%- endif -%}
+
+            {%- render 'collection-item', collection: link.object, apply_overlay: section.settings.apply_overlay -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- if section.settings.collections_to_show == 'all' -%}
+            {%- for collection in collections -%}
+              {%- render 'collection-item', collection: collection, apply_overlay: section.settings.apply_overlay -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for block in section.blocks -%}
+              {%- assign collection = collections[block.settings.collection] -%}
+              {%- render 'collection-item', collection: collection, apply_overlay: section.settings.apply_overlay, block: block -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.collections_to_show == 'all' -%}
+        {%- render 'pagination', paginate: paginate, tight: true -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+    {% endcomment %}
+
+    <div class="c-collectionlists__container">
+      {%- for block in section.blocks -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+  
+        <div class="c-collectionlist">
+          {%- assign collection_image = block.settings.image | default: collection.image | default: collection.products.first.featured_image -%}
+          <a href="{{ block.settings.button_link | default: collection.url }}" {{ block.shopify_attributes }} class="c-collectionlist__collection">
+            {%- capture mobile_size -%}750x{% if collection_image.height >= 960 %}960{% else %}{{ collection_image.height }}{% endif %}{%- endcapture -%}
+            {%- assign image_crop = block.settings.image_alignment | split: ' ' | last -%}
+  
+            <div class="CollectionItem__Wrapper c-collectionlist__collection_wrapper" {% if collection_image %}style="background-image: url({{ collection_image | img_url: '1x1' }})"{% endif %}>
+              <div class="CollectionItem__ImageWrapper">
+                <div class="CollectionItem__Image {% if block.settings.apply_overlay %}Image--contrast{% endif %} Image--lazyLoad Image--zoomOut hide-no-js"
+                    style="background-position: {{ block.settings.image_alignment }}"
+                    data-optimumx="1.4"
+                    data-expand="-150"
+                    {% if collection_image %}data-bgset="{{ collection_image | img_url: mobile_size, crop: image_crop }} 750w, {{ collection_image | img_url: '1000x' }} 1000w, {{ collection_image | img_url: '1500x' }} 1500w"{% endif %}>
+                  {%- if collection_image == nil -%}
+                    <div class="PlaceholderBackground PlaceholderSvg--dark">
+                      {%- capture image_name -%}lifestyle-{% cycle 'anchor': '1', '2' %}{%- endcapture -%}
+                      {{ image_name | placeholder_svg_tag: 'PlaceholderBackground__Svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+  
+                {%- if collection_image -%}
+                  <noscript>
+                    <div class="CollectionItem__Image {% if apply_overlay %}Image--contrast{% endif %}" style="background-position: {{ block.settings.image_alignment }}; background-image: url({{ collection_image | img_url: '1000x' }})"></div>
+                  </noscript>
+                {%- endif -%}
+              </div>
+  
+              <div class="CollectionItem__Content CollectionItem__Content--{{ block.settings.content_position | default: 'bottomLeft' }}">
+                {%- if block.settings.subheading != blank -%}
+                  <h5 class="SectionHeader__SubHeading Heading u-h6">{{ block.settings.subheading | escape }}</h5>
+                {%- endif -%}
+  
+                <h4 class="SectionHeader__Heading SectionHeader__Heading--emphasize Heading u-h1"># {{ block.settings.title | default: collection.title | escape }}</h4>
+  
+                {%- if block.settings.button_text != blank -%}
+                  <span class="c-btn c-collectionlist__collection__btn c-pc_only--flex">{{ block.settings.button_text | escape }}</span>
+                {%- else -%}
+                  <span class="c-btn c-collectionlist__collection__btn c-pc_only--flex">{{ 'collection.general.view_products' | t }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+  
+          {%- assign productcount = collection.all_products_count -%}
+  
+          <div class="c-collectionlist__collectionitem{% if productcount > 4 %} js-collection_flickity{%- endif -%}{% if productcount > 2 %} js-collection_flickity_sp{%- endif -%}{% if productcount < 5 %} flickity-disabled{%- endif -%}{% if productcount < 3 %} flickity-disabled_sp{%- endif -%}">
+            {%- for product in collection.products limit: 12 -%}
+              <div class="Carousel__Cell">
+                {%- render 'product-item-collections', product: product, show_product_info: true, show_vendor: false, show_labels: true -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if block.settings.button_text != blank -%}
+            <a href="{{ block.settings.button_link | default: collection.url }}"><span class="c-btn c-collectionlist__collection__btn c-sp_only--flex">{{ block.settings.button_text | escape }}</span></a>
+          {%- else -%}
+            <a href="{{ block.settings.button_link | default: collection.url }}"><span class="c-btn c-collectionlist__collection__btn c-sp_only--flex">{{ 'collection.general.view_products' | t }}</span></a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+      
+  </section>
+{%- endif -%}
+
+<script>
+  $(window).on('load resize', function() {
+	if ($('.c-collectionlist__collectionitem').hasClass('flickity-enabled')) {
+		$('.c-collectionlist__collectionitem').flickity('destroy');
+	};
+	if (window.innerWidth <= 1023) {
+		$('.js-collection_flickity_sp').flickity({
+			prevNextButtons: false,
+			pageDots: false,
+			wrapAround: false,
+			contain: true,
+			cellAlign: "center",
+			dragThreshold: 8,
+			groupCells: true
+		});
+	} else {
+        $('.js-collection_flickity').flickity({
+            prevNextButtons: true,
+            pageDots: false,
+            wrapAround: false,
+            contain: true,
+            cellAlign: "center",
+            dragThreshold: 8,
+            groupCells: true
+        });
+    }
+});
+</script>
+
+{% schema %}
+{
+  "name": "List collections page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+    },
+    {
+      "type": "radio",
+      "id": "collections_to_show",
+      "label": "Collections to show",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "selected",
+          "label": "Selected"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_spacing",
+      "label": "Add spacing",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "expand_collection",
+      "label": "Expand collections to fill row",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "apply_overlay",
+      "label": "Apply overlay on image",
+      "info": "This can improve text visibility.",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button text",
+      "default": "#363636"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1120 x 1200px .jpg recommended"
+        },
+        {
+          "type": "select",
+          "id": "image_alignment",
+          "label": "Image alignment",
+          "options": [
+            {
+              "value": "top left",
+              "label": "Top left"
+            },
+            {
+              "value": "top center",
+              "label": "Top center"
+            },
+            {
+              "value": "top right",
+              "label": "Top right"
+            },
+            {
+              "value": "center left",
+              "label": "Middle left"
+            },
+            {
+              "value": "center center",
+              "label": "Middle center"
+            },
+            {
+              "value": "center right",
+              "label": "Middle right"
+            },
+            {
+              "value": "bottom left",
+              "label": "Bottom left"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom center"
+            },
+            {
+              "value": "bottom right",
+              "label": "Bottom right"
+            }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            {
+              "value": "middleLeft",
+              "label": "Middle left"
+            },
+            {
+              "value": "middleRight",
+              "label": "Middle right"
+            },
+            {
+              "value": "middleCenter",
+              "label": "Middle center"
+            },
+            {
+              "value": "bottomLeft",
+              "label": "Bottom left"
+            },
+            {
+              "value": "bottomRight",
+              "label": "Bottom right"
+            },
+            {
+              "value": "bottomCenter",
+              "label": "Bottom center"
+            }
+          ],
+          "default": "bottomLeft"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Sub-heading",
+          "default": "Sub-heading"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "View products"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,181 @@
+<section class="c-top__section__blogpost col5" id="section-{{ section.id }}" data-section-type="article-list" data-section-id="{{ section.id }}">
+  <div class="c-container">
+    {%- if section.settings.subheading != blank or section.settings.title != blank -%}
+      <header class="SectionHeader SectionHeader--center">
+        {%- if section.settings.subheading != blank -%}
+          <h3 class="SectionHeader__SubHeading Heading u-h6">{{ section.settings.subheading | escape }}</h3>
+        {%- endif -%}
+
+        {%- if request.locale.iso_code == 'en' -%}
+          {%- if section.settings.title_en != blank -%}
+            <h2 class="c-top__section__blogpost__title">{{ section.settings.title_en | escape }}</h2>
+          {%- endif -%}
+        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+          {%- if section.settings.title_cn != blank -%}
+            <h2 class="c-top__section__blogpost__title">{{ section.settings.title_cn | escape }}</h2>
+          {%- endif -%}
+        {%- else -%}
+          {%- if section.settings.title != blank -%}
+            <h2 class="c-top__section__blogpost__title">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="c-blogpost__wrapper">
+      {%- assign block = section.blocks.first -%}
+
+      {%- case block.type -%}
+        {%- when 'article' -%}
+          {%- for i in (1..3) -%}
+            {%- assign article_option = 'article_' | append: i -%}
+            {%- assign article = articles[block.settings[article_option]] -%}
+
+            {%- unless article == empty -%}
+              {%- render 'article-item', block: block, article: article -%}
+            {%- endunless -%}
+          {%- endfor -%}
+
+        {%- when 'blog' -%}
+          {%- assign blog = blogs[block.settings.blog] -%}
+
+          <div class="c-top__section__blogpost__left">
+            {%- for article in blog.articles limit: 1 -%}
+              {%- render 'article-item', block: block, article: article -%}
+            {%- endfor -%}
+          </div>
+
+          <div class="c-top__section__blogpost__right">
+            {%- for article in blog.articles limit: 4 offset: 1 -%}
+              {%- render 'article-item', block: block, article: article -%}
+            {%- endfor -%}
+          </div>
+      {%- endcase -%}
+    </div>
+
+    {%- if section.settings.button_text != blank -%}
+      <div class="SectionFooter c-top__section__blogpost__btn">
+        <a href="{{ section.settings.button_link }}" class="Button Button--primary u-small c-btn">
+          {%- if request.locale.iso_code == 'en' -%}
+            {{ section.settings.button_text_en | escape }}
+          {%- elsif request.locale.iso_code == 'zh-CN' -%}
+            {{ section.settings.button_text_cn | escape }}
+          {%- else -%}
+            {{ section.settings.button_text | escape }}
+          {%- endif -%}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "(TOP)Blog posts 5items",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "(TOP)Blog posts 5items"
+    },
+    {
+      "type": "text",
+      "id": "title_en",
+      "label": "Heading English",
+      "default": "(TOP)Blog posts 5items"
+    },
+    {
+      "type": "text",
+      "id": "title_cn",
+      "label": "Heading Chinese",
+      "default": "(TOP)Blog posts 5items"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show article category",
+      "info": "The first article's tag is used as the main category.",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View all articles"
+    },
+    {
+      "type": "text",
+      "id": "button_text_en",
+      "label": "Button text english",
+      "default": "More"
+    },
+    {
+      "type": "text",
+      "id": "button_text_cn",
+      "label": "Button text chinese",
+      "default": "More"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Article",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article_1",
+          "label": "Article 1"
+        },
+        {
+          "type": "article",
+          "id": "article_2",
+          "label": "Article 2"
+        },
+        {
+          "type": "article",
+          "id": "article_3",
+          "label": "Article 3"
+        }
+      ]
+    },
+    {
+      "type": "blog",
+      "name": "Blog",
+      "settings": [
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Blog",
+      "name": "(TOP)Blog posts 5items",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "blog",
+          "settings": {
+            "blog": "news"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

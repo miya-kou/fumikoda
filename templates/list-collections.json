@@ -1,0 +1,159 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "blocks": {
+        "43c94372-23f2-4b18-b032-3272ef2a26b0": {
+          "type": "collection",
+          "settings": {
+            "collection": "shoulder-bag",
+            "image": "shopify:\/\/shop_images\/ARIANNA_BK_talaoka05.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "2e48653b-95c5-4ec8-8307-9c4270699c33": {
+          "type": "collection",
+          "settings": {
+            "collection": "tote",
+            "image": "shopify:\/\/shop_images\/ALEX_LOG02.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "680d5beb-ddfd-4a52-bb2e-e47dbae1aea9": {
+          "type": "collection",
+          "settings": {
+            "collection": "rucksuck",
+            "image": "shopify:\/\/shop_images\/BILLY_MBE03.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "7d52f617-21b5-47b2-b02d-f0a8be86689e": {
+          "type": "collection",
+          "settings": {
+            "collection": "bag-accessories",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "074a863c-a433-4946-8e50-b20a04cd3e05": {
+          "type": "collection",
+          "settings": {
+            "collection": "purse",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "72438c8a-8b8c-47b5-a106-f6a3c76f7381": {
+          "type": "collection",
+          "settings": {
+            "collection": "goods",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "d9c91aa4-7b3a-4b1d-815a-62ba04b2c546": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "5d2d3dd7-7d3c-4b37-bc15-7dc6f2753d80": {
+          "type": "collection",
+          "settings": {
+            "collection": "upcycling",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "52a14f36-b944-47e6-9ab6-9aa557f06c0c": {
+          "type": "collection",
+          "settings": {
+            "collection": "recycling",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "7eb3464f-be52-4cbd-ad76-766a25accdff": {
+          "type": "collection",
+          "settings": {
+            "collection": "social-support",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        },
+        "a7484412-0c15-4756-8df2-d17f2d78ed9e": {
+          "type": "collection",
+          "settings": {
+            "collection": "men",
+            "image": "shopify:\/\/shop_images\/MEN_BILLY3.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "",
+            "button_text": "コレクションを見る"
+          }
+        }
+      },
+      "block_order": [
+        "43c94372-23f2-4b18-b032-3272ef2a26b0",
+        "2e48653b-95c5-4ec8-8307-9c4270699c33",
+        "680d5beb-ddfd-4a52-bb2e-e47dbae1aea9",
+        "7d52f617-21b5-47b2-b02d-f0a8be86689e",
+        "074a863c-a433-4946-8e50-b20a04cd3e05",
+        "72438c8a-8b8c-47b5-a106-f6a3c76f7381",
+        "d9c91aa4-7b3a-4b1d-815a-62ba04b2c546",
+        "5d2d3dd7-7d3c-4b37-bc15-7dc6f2753d80",
+        "52a14f36-b944-47e6-9ab6-9aa557f06c0c",
+        "7eb3464f-be52-4cbd-ad76-766a25accdff",
+        "a7484412-0c15-4756-8df2-d17f2d78ed9e"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "image_size": "normal",
+        "add_spacing": true,
+        "expand_collection": false,
+        "apply_overlay": true,
+        "text_color": "#ffffff",
+        "button_color": "#363636"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-collectionList",
+      "blocks": {
+        "cfe85b23-93b5-42f4-8a1c-ec1a12ac4b6a": {
+          "type": "collection",
+          "settings": {
+            "collection": "shoulder-bag",
+            "image": "shopify:\/\/shop_images\/ARIANNA_BK_talaoka05.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "ショルダーバッグ",
+            "title_en": "SHOULDER BAG",
+            "title_cn": "双肩包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "3c1c9441-3865-4c23-b542-d99875095d47": {
+          "type": "collection",
+          "settings": {
+            "collection": "tote",
+            "image": "shopify:\/\/shop_images\/ALEX_LOG02.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "トートバッグ",
+            "title_en": "TOTE BAG",
+            "title_cn": "手提袋",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "58e9802c-6c44-4c42-89e1-e0ec0e5bf0c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "rucksuck",
+            "image": "shopify:\/\/shop_images\/BILLY_MBE03.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リュック",
+            "title_en": "RUCKSACK",
+            "title_cn": "肩背式背包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "0255bf22-338f-431a-9a71-986da1be248e": {
+          "type": "collection",
+          "settings": {
+            "collection": "bag-accessories",
+            "image": "shopify:\/\/shop_images\/tala.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "バッグアクセサリー",
+            "title_en": "BAG ACCESSORIES",
+            "title_cn": "包袋配件",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "d3899f7f-fc20-416f-8aca-b3e47c3f170f": {
+          "type": "collection",
+          "settings": {
+            "collection": "purse",
+            "image": "shopify:\/\/shop_images\/collections_purse.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "財布",
+            "title_en": "WALLET",
+            "title_cn": "钱包",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "bc7685aa-17ef-4cf0-8db6-3d78cbc785af": {
+          "type": "collection",
+          "settings": {
+            "collection": "goods",
+            "image": "shopify:\/\/shop_images\/IMG_2757.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "小物アイテム",
+            "title_en": "SMALL ITEMS",
+            "title_cn": "小件物品",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "99ba1db4-59c0-405d-938a-2f48934d7abd": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "image": "shopify:\/\/shop_images\/collections_accessories.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アクセサリー",
+            "title_en": "ACCESSORIES",
+            "title_cn": "配件",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "25639c2a-ca3c-4e91-ad11-18d74b169ce1": {
+          "type": "collection",
+          "settings": {
+            "collection": "social-support",
+            "image": "shopify:\/\/shop_images\/collections_social-support.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "障がい者雇用支援",
+            "title_en": "Employment support for people with disabilities",
+            "title_cn": "对残疾人的就业支持",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "2a3954c5-b88b-4259-8829-f6b22a5d0681": {
+          "type": "collection",
+          "settings": {
+            "collection": "upcycling",
+            "image": "shopify:\/\/shop_images\/collections_upcycling.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アップサイクル",
+            "title_en": "UPCYCLING",
+            "title_cn": "升级改造",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "7757b764-736d-4a5d-929a-7294c09fa74b": {
+          "type": "collection",
+          "settings": {
+            "collection": "recycling",
+            "image": "shopify:\/\/shop_images\/image01.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リサイクル",
+            "title_en": "RECYCLING",
+            "title_cn": "回收利用",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        }
+      },
+      "block_order": [
+        "cfe85b23-93b5-42f4-8a1c-ec1a12ac4b6a",
+        "3c1c9441-3865-4c23-b542-d99875095d47",
+        "58e9802c-6c44-4c42-89e1-e0ec0e5bf0c3",
+        "0255bf22-338f-431a-9a71-986da1be248e",
+        "d3899f7f-fc20-416f-8aca-b3e47c3f170f",
+        "bc7685aa-17ef-4cf0-8db6-3d78cbc785af",
+        "99ba1db4-59c0-405d-938a-2f48934d7abd",
+        "25639c2a-ca3c-4e91-ad11-18d74b169ce1",
+        "2a3954c5-b88b-4259-8829-f6b22a5d0681",
+        "7757b764-736d-4a5d-929a-7294c09fa74b"
+      ],
+      "settings": {
+        "image_pc": "shopify:\/\/shop_images\/kv-women_25447e2a-ff22-4554-ad03-8358507680a5.jpg",
+        "image_sp": "shopify:\/\/shop_images\/kv-women-sp.jpg"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

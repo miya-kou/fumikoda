@@ -1,0 +1,197 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-collection",
+      "blocks": {
+        "7c1540b7-3e8d-4b43-a690-0882604b77ef": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/blackcollectionmain2-1635906206888.png",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "BLACK COLLECTION",
+            "title_en": "BLACK COLLECTION",
+            "title_cn": "BLACK COLLECTION",
+            "button_text": "BLACK COLLECTION",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/black-collection"
+          }
+        },
+        "02b58663-d66b-411b-b385-38cd33378d67": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/main03.png",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "JUTE COLLECTION",
+            "title_en": "",
+            "title_cn": "",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/collections"
+          }
+        },
+        "d58116df-42df-483c-b68d-48f20af18f2a": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/6a30c7aa229ef8359a1a37b6049485f3_7d1d32ea-827c-4b54-9bce-a410997c8bc8.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "SMART FUR COLLECTION",
+            "title_en": "SMART FUR COLLECTION",
+            "title_cn": "SMART FUR COLLECTION",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/smart-fur-collection"
+          }
+        },
+        "43a3330e-3aa7-49b1-b42e-428d8f071340": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/collections_takaoka-collection.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "高岡銅器 COLLECTION",
+            "title_en": "TAKAOKA COPPERWARE COLLECTION",
+            "title_cn": "高岡銅器 COLLECTION",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/takaoka-collection"
+          }
+        },
+        "34b3352a-6873-4543-8de6-15c585849c7c": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/al01-1642035693776_ae81c578-4172-46df-9b0d-0908d1daa05e.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "ANIMAL COLLECTION",
+            "title_en": "ANIMAL COLLECTION",
+            "title_cn": "ANIMAL COLLECTION",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/animal-collection"
+          }
+        },
+        "50561e1f-80f3-48ac-980f-e1ee970cd6b2": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/collections_pink-collection.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "PINK COLLECTION",
+            "title_en": "PINK COLLECTION",
+            "title_cn": "PINK COLLECTION",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/pink-collection"
+          }
+        },
+        "91e4a45a-89a0-4888-b58e-b83ef9d2e833": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IMG_3708_1024x1024_759990e5-0153-4e4b-8558-4bedb35a1711.png",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "LACE COLLECTION",
+            "title_en": "",
+            "title_cn": "",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/pages\/lace-collection"
+          }
+        },
+        "3eecd115-ad8a-41be-92f1-c24da2465e11": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/coincase-handicapped800x800.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "障がい者雇用支援",
+            "title_en": "EMPLOYMENT SUPPORT FOR PEOPLE WITH DISABILITIES",
+            "title_cn": "对残疾人的就业支持",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/collections\/social-support"
+          }
+        },
+        "bcc4d0f1-50e0-4b79-b8a2-cc1e4f67a014": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/mini-bag-charm__6_800x800_5358a858-482b-4dca-b8d2-eae9a7d6d2fc.png",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アップサイクル",
+            "title_en": "UPCYCLING",
+            "title_cn": "升级改造",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/collections\/upcycling"
+          }
+        },
+        "10a1ed15-4c2c-4566-b32a-5712c0348ed2": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/chris_black_l_5_800x800_700818b0-a9eb-4922-85ac-b2fd91cd02ae.png",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リサイクル",
+            "title_en": "RECYCLING",
+            "title_cn": "回收利用",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品",
+            "button_link": "shopify:\/\/collections\/recycling"
+          }
+        }
+      },
+      "block_order": [
+        "7c1540b7-3e8d-4b43-a690-0882604b77ef",
+        "02b58663-d66b-411b-b385-38cd33378d67",
+        "d58116df-42df-483c-b68d-48f20af18f2a",
+        "43a3330e-3aa7-49b1-b42e-428d8f071340",
+        "34b3352a-6873-4543-8de6-15c585849c7c",
+        "50561e1f-80f3-48ac-980f-e1ee970cd6b2",
+        "91e4a45a-89a0-4888-b58e-b83ef9d2e833",
+        "3eecd115-ad8a-41be-92f1-c24da2465e11",
+        "bcc4d0f1-50e0-4b79-b8a2-cc1e4f67a014",
+        "10a1ed15-4c2c-4566-b32a-5712c0348ed2"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "image_size": "normal",
+        "add_spacing": true,
+        "expand_collection": false,
+        "apply_overlay": true,
+        "text_color": "#ffffff",
+        "button_color": "#363636"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

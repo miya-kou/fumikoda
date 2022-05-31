@@ -1,0 +1,100 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-collectionList",
+      "blocks": {
+        "c7dc07cc-4721-41ca-b9b2-bc7d5f318f3f": {
+          "type": "collection",
+          "settings": {
+            "collection": "mens-bag",
+            "image": "shopify:\/\/shop_images\/kv-men_ab5e4163-7206-4d25-8cc5-769f9be2644f.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "バッグ",
+            "title_en": "Bag",
+            "title_cn": "バッグ",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "71b7bdd7-64cd-467a-b879-5e35fe1bbf35": {
+          "type": "collection",
+          "settings": {
+            "collection": "mens-goods",
+            "image": "shopify:\/\/shop_images\/sheryl_black_plus_4.jpg",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "小物アイテム",
+            "title_en": "小物アイテム",
+            "title_cn": "小物アイテム",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "f07cf8e2-7a3e-4902-991d-2a4e095d9dde": {
+          "type": "collection",
+          "settings": {
+            "collection": "upcycling",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "アップサイクル",
+            "title_en": "UPCYCLING",
+            "title_cn": "升级改造",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "19171830-af09-43aa-996e-30938e5bfabd": {
+          "type": "collection",
+          "settings": {
+            "collection": "social-support",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "障がい者雇用支援",
+            "title_en": "障がい者雇用支援",
+            "title_cn": "障がい者雇用支援",
+            "button_text": "コレクションを見る",
+            "button_text_en": "View the collection",
+            "button_text_cn": "查看藏品"
+          }
+        },
+        "5a0d4211-69ed-47e2-89e7-127977b8bff8": {
+          "type": "collection",
+          "settings": {
+            "collection": "recycling",
+            "image_alignment": "center center",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "リサイクル",
+            "title_en": "リサイクル",
+            "title_cn": "リサイクル",
+            "button_text": "コレクションを見る",
+            "button_text_en": "VIEW THE COLLECTION",
+            "button_text_cn": "查看藏品"
+          }
+        }
+      },
+      "block_order": [
+        "c7dc07cc-4721-41ca-b9b2-bc7d5f318f3f",
+        "71b7bdd7-64cd-467a-b879-5e35fe1bbf35",
+        "f07cf8e2-7a3e-4902-991d-2a4e095d9dde",
+        "19171830-af09-43aa-996e-30938e5bfabd",
+        "5a0d4211-69ed-47e2-89e7-127977b8bff8"
+      ],
+      "settings": {
+        "image_pc": "shopify:\/\/shop_images\/kv-men.jpg",
+        "image_sp": "shopify:\/\/shop_images\/kv-men_ab5e4163-7206-4d25-8cc5-769f9be2644f.jpg"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

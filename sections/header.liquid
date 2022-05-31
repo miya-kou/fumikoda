@@ -1,0 +1,2664 @@
+{%- comment -%}
+In Prestige, the header is quite complex due to the very high number of possible combinations. If you have to edit it, please
+make sure to duplicate the theme first so you can revert your changes in case any issue is introduced.
+{%- endcomment -%}
+
+{%- if request.locale.iso_code == 'en' or request.locale.iso_code == 'zh-CN' -%}
+  {%- assign locale_url = routes.root_url | append: "/" -%}
+{%- else -%}
+  {%- assign locale_url = routes.root_url -%}
+{%- endif -%}
+
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+USEFUL VARIABLES
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- assign use_transparent_header = false -%}
+
+{%- if template == 'index' and section.settings.enable_transparent_header -%}
+  {%- assign use_transparent_header = true -%}
+{%- endif -%}
+
+{%- if template.name == 'collection' and section.settings.enable_transparent_header_collection and collection.image and collection.all_products_count > 0 and collection.template_suffix != 'no-image' -%}
+  {%- assign use_transparent_header = true -%}
+{%- endif -%}
+
+{%- if section.settings.navigation_style != 'sidebar' -%}
+  {%- assign use_sidebar_menu = false -%}
+{%- else -%}
+  {%- assign use_sidebar_menu = true -%}
+{%- endif -%}
+
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+CURRENCY AND LANGUAGE SELECTORS
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
+  {%- assign currency_selector = true -%}
+{%- endif -%}
+
+{%- if section.settings.show_locale_selector and shop.published_locales.size > 1 -%}
+
+  {%- assign locale_selector = true -%}
+{%- endif -%}
+
+{%- if locale_selector or currency_selector -%}
+  {%- capture localization_form -%}
+    {%- form 'localization', id: 'localization_form_header', class: 'Header__LocalizationForm hidden-pocket hidden-lap' -%}
+
+      <div class="HorizontalList HorizontalList--spacingLoose">
+        {%- if locale_selector -%}
+          <div class="HorizontalList__Item c-header__select_langagbox">
+            <input type="hidden" name="locale_code" value="{{ form.current_locale.iso_code }}">
+            <span class="u-visually-hidden">{{ 'header.general.locale' | t }}</span>
+
+            <button type="button" class="SelectButton Link Link--primary u-h8 c-header__select_langage" aria-haspopup="true" aria-expanded="false" aria-controls="header-locale-popover">
+              {%- if form.current_locale.iso_code == 'ja' -%} JP {%- elsif form.current_locale.iso_code == 'en' -%} EN {%- elsif form.current_locale.iso_code == 'zh-CN' -%} CN {% endif %}
+              {%- render 'icon', icon: 'select-arrow' -%}
+            </button>
+
+            <div id="header-locale-popover" class="Popover Popover--small Popover--noWrap c-header__select_langage__pop" aria-hidden="true">
+              <header class="Popover__Header">
+                <button type="button" class="Popover__Close Icon-Wrapper--clickable" data-action="close-popover">{% render 'icon' with 'close' %}</button>
+                <span class="Popover__Title Heading u-h4">{{ 'header.general.locale' | t }}</span>
+              </header>
+
+              <div class="Popover__Content">
+                <div class="Popover__ValueList Popover__ValueList--center" data-scrollable>
+                  {%- for locale in form.available_locales -%}
+                    <button type="submit" name="locale_code" class="Popover__Value {% if locale.iso_code == form.current_locale.iso_code %}is-selected{% endif %} Heading Link Link--primary u-h6" value="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %}>
+                      {{- locale.endonym_name -}}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if currency_selector -%}
+          <div class="HorizontalList__Item c-header__select_currencybox">
+            <input type="hidden" name="currency_code" value="{{ form.current_currency.iso_code }}">
+            <span class="u-visually-hidden">{{ 'header.general.currency' | t }}</span>
+
+            <button type="button" class="SelectButton Link Link--primary u-h8" aria-haspopup="true" aria-expanded="false" aria-controls="header-currency-popover">
+              {{ form.current_currency.iso_code }} {% if form.current_currency.symbol %}{{ form.current_currency.symbol }}{% endif %}
+              {%- render 'icon', icon: 'select-arrow' -%}
+            </button>
+
+            <div id="header-currency-popover" class="c-header__select_currencybox_popover Popover Popover--small Popover--noWrap" aria-hidden="true">
+              <header class="Popover__Header">
+                <button type="button" class="Popover__Close Icon-Wrapper--clickable" data-action="close-popover">{% render 'icon' with 'close' %}</button>
+                <span class="Popover__Title Heading u-h4">{{ 'header.general.currency' | t }}</span>
+              </header>
+
+              <div class="Popover__Content">
+                <div class="Popover__ValueList Popover__ValueList--center" data-scrollable>
+                  {%- for currency in form.available_currencies -%}
+                    <button type="submit" name="currency_code" class="Popover__Value {% if currency.iso_code == form.current_currency.iso_code %}is-selected{% endif %} Heading Link Link--primary u-h6"  value="{{ currency.iso_code }}" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %}>
+                      {{ currency.iso_code }} {% if currency.symbol %}{{ currency.symbol }}{% endif %}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endform -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+SEARCH FORM (implemented as a modal)
+
+Implementation note: make sure that the Search div is always just before the Header element, as the CSS uses
+                     this assumption
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+<div id="Search" class="Search" aria-hidden="true">
+  <div class="Search__Inner">
+    <div class="Search__SearchBar">
+      <form action="{{ routes.search_url }}" name="GET" role="search" class="Search__Form">
+        <div class="Search__InputIconWrapper">
+          <span class="hidden-tablet-and-up">{%- render 'icon' with 'search' -%}</span>
+          <span class="hidden-phone">{%- render 'icon' with 'search-desktop' -%}</span>
+        </div>
+
+        <input type="search" class="Search__Input Heading" name="q" autocomplete="off" autocorrect="off" autocapitalize="off" aria-label="{{ 'search.general.input_placeholder' | t }}" placeholder="{{ 'search.general.input_placeholder' | t }}" autofocus>
+        <input type="hidden" name="type" value="product">
+      </form>
+
+      <button class="Search__Close Link Link--primary" data-action="close-search" aria-label="{{ 'header.navigation.close_search' | t }}">{% render 'icon' with 'close' %}</button>
+    </div>
+
+    <div class="Search__Results" aria-hidden="true">
+      {%- if settings.search_mode != 'product' -%}
+        <div class="PageLayout PageLayout--breakLap">
+          <div class="PageLayout__Section"></div>
+          <div class="PageLayout__Section PageLayout__Section--secondary"></div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+HEADER CONTENT
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- capture section_settings -%}
+{
+  "navigationStyle": {{ section.settings.navigation_style | json }},
+  "hasTransparentHeader": {% if use_transparent_header %}true{% else %}false{% endif %},
+  "isSticky": {% if section.settings.use_sticky_header %}true{% else %}false{% endif %}
+}
+{%- endcapture -%}
+
+<header id="section-{{ section.id }}"
+        class="Header Header--{{ section.settings.navigation_style }} {% if section.settings.navigation_style != 'inline' and section.settings.navigation_style != 'logoLeft' %}Header--initialized{% endif %} {% if use_transparent_header %}Header--transparent{% endif %} {% if section.settings.show_icons or section.settings.navigation_style == 'sidebar' %}Header--withIcons{% endif %}"
+        data-section-id="{{ section.id }}"
+        data-section-type="header"
+        data-section-settings='{{ section_settings }}'
+        role="banner">
+  <div class="Header__Wrapper">
+    <div class="Header__FlexItem Header__FlexItem--fill">
+      <button class="Header__Icon Icon-Wrapper Icon-Wrapper--clickable {% unless use_sidebar_menu %}hidden-desk{% endunless %}" aria-expanded="false" data-action="open-drawer" data-drawer-id="sidebar-menu" aria-label="{{ 'header.navigation.open_sidebar' | t }}">
+        <span class="hidden-tablet-and-up">{%- render 'icon' with 'nav' -%}</span>
+        <span class="hidden-phone">{%- render 'icon' with 'nav-desktop' -%}</span>
+      </button>
+
+      {%- comment -%}
+      --------------------------------------------------------------------------------------------------------------------
+      DESKTOP NAVIGATION (if not using the sidebar mode)
+      --------------------------------------------------------------------------------------------------------------------
+      {%- endcomment -%}
+
+      {%- unless use_sidebar_menu -%}
+        {%- assign main_menu_handle = section.settings.navigation_menu | default: 'main-menu' -%}
+        {%- assign main_menu = linklists[main_menu_handle] -%}
+
+        {%- assign mega_menu_names = '' -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'mega_menu' -%}
+            {%- assign trim_mega_menu_name = block.settings.navigation_mega_menu | strip -%}
+            {%- assign mega_menu_names = mega_menu_names | append: trim_mega_menu_name | append: ',' -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign mega_menu_names = mega_menu_names | downcase | split: ',' | compact -%}
+
+        {% comment %}
+        {{- localization_form -}}
+        {% endcomment %}
+      {%- endunless -%}
+    </div>
+
+    <nav class="Header__MainNav hidden-pocket hidden-lap" aria-label="{{ 'header.navigation.title' | t }}">
+      <ul class="HorizontalList HorizontalList--spacingExtraLoose c-header__list">
+        {%- for link in main_menu.links -%}
+          {%- assign downcased_link_title = link.title | downcase | strip -%}
+          {%- assign use_mega_menu = false -%}
+
+          {%- capture menu_item_dropdown -%}
+            {%- if mega_menu_names contains downcased_link_title -%}
+              {%- for block in section.blocks -%}
+                {%- assign downcased_mega_menu_name = block.settings.navigation_mega_menu | downcase -%}
+
+                {%- if downcased_mega_menu_name != downcased_link_title -%}
+                  {%- continue -%}
+                {%- endif -%}
+
+                {%- assign use_mega_menu = true -%}
+                {%- assign push_image_count = 0 -%}
+
+                {%- if block.settings.push_1_image -%}
+                  {%- assign push_image_count = push_image_count | plus: 1 -%}
+                {%- endif -%}
+
+                {%- if block.settings.push_2_image -%}
+                  {%- assign push_image_count = push_image_count | plus: 1 -%}
+                {%- endif -%}
+
+                {%- assign should_space_evenly = false -%}
+
+                {%- if push_image_count == 0 and link.links.size <= 3 -%}
+                  {%- assign should_space_evenly = true -%}
+                {%- endif -%}
+
+                {%- if push_image_count == 1 and link.links.size == 1 -%}
+                  {%- assign should_space_evenly = true -%}
+                {%- endif -%}
+
+                {%- if push_image_count == 2 and link.links.size == 1 -%}
+                  {%- assign should_space_evenly = true -%}
+                {%- endif -%}
+
+                <div class="MegaMenu {% if push_image_count != 0 and link.links.size == 0 %}MegaMenu--spacingCenter{% elsif should_space_evenly %}MegaMenu--spacingEvenly{% endif %} {% if push_image_count == 0 and link.links.size > 4 %}MegaMenu--grid{% endif %}" aria-hidden="true" {{ block.shopify_attributes }}>
+                  <div class="MegaMenu__Inner">
+                    {%- for sub_link in link.links -%}
+                      <div class="MegaMenu__Item MegaMenu__Item--fit">
+                        <a href="{{ sub_link.url }}" class="MegaMenu__Title Heading Text--subdued u-h7">{{ sub_link.title | title }}</a>
+
+                        {%- if sub_link.links != blank -%}
+                          <ul class="Linklist">
+                            {%- for sub_sub_link in sub_link.links -%}
+                              <li class="Linklist__Item">
+                                <a href="{{ sub_sub_link.url }}" class="Link Link--secondary">{{ sub_sub_link.title | escape }}</a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+
+                    {%- if push_image_count > 0 -%}
+                      <div class="MegaMenu__Item" style="{% if push_image_count == 1 %}width: 370px; min-width: 250px;{% else %}width: 660px; min-width: 425px;{% endif %}">
+                        {%- if block.settings.push_1_image -%}
+                          <div class="MegaMenu__Push {% if push_image_count == 2 %}MegaMenu__Push--shrink{% endif %}">
+                            {%- if block.settings.push_1_url != blank -%}
+                              <a class="MegaMenu__PushLink" href="{{ block.settings.push_1_url }}">
+                            {%- endif -%}
+
+                            {%- assign max_width = 370 | at_most: block.settings.push_1_image.width -%}
+
+                            <div class="MegaMenu__PushImageWrapper AspectRatio" style="background: url({{ block.settings.push_1_image | img_url: '1x1', format: 'jpg' }}); max-width: {{ max_width }}px; --aspect-ratio: {{ block.settings.push_1_image.aspect_ratio }}">
+                              <img class="Image--lazyLoad Image--fadeIn"
+                                    data-src="{{ block.settings.push_1_image | img_url: '370x230', scale: 2 }}"
+                                    alt="{{ block.settings.push_1_image.alt | escape }}">
+
+                              <span class="Image__Loader"></span>
+                            </div>
+
+                            {%- if block.settings.push_1_heading != blank -%}
+                              <p class="MegaMenu__PushHeading Heading u-h6">{{ block.settings.push_1_heading | escape }}</p>
+                            {%- endif -%}
+
+                            {%- if block.settings.push_1_subheading != blank -%}
+                              <p class="MegaMenu__PushSubHeading Heading Text--subdued u-h7">{{ block.settings.push_1_subheading | escape }}</p>
+                            {%- endif -%}
+
+                            {%- if block.settings.push_1_url != blank -%}
+                              </a>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+
+                        {%- if block.settings.push_2_image -%}
+                          <div class="MegaMenu__Push {% if push_image_count == 2 %}MegaMenu__Push--shrink{% endif %}">
+                            {%- if block.settings.push_2_url != blank -%}
+                              <a class="MegaMenu__PushLink" href="{{ block.settings.push_2_url }}">
+                            {%- endif -%}
+
+                            {%- assign max_width = 370 | at_most: block.settings.push_2_image.width -%}
+
+                            <div class="MegaMenu__PushImageWrapper AspectRatio" style="background: url({{ block.settings.push_2_image | img_url: '1x1', format: 'jpg' }}); max-width: {{ max_width }}px; --aspect-ratio: {{ block.settings.push_2_image.aspect_ratio }}">
+                              <img class="Image--lazyLoad Image--fadeIn"
+                                    data-src="{{ block.settings.push_2_image | img_url: '370x230', scale: 2 }}"
+                                    alt="{{ block.settings.push_2_image.alt | escape }}">
+
+                              <span class="Image__Loader"></span>
+                            </div>
+
+                            {%- if block.settings.push_2_heading != blank -%}
+                              <p class="MegaMenu__PushHeading Heading u-h6">{{ block.settings.push_2_heading | escape }}</p>
+                            {%- endif -%}
+
+                            {%- if block.settings.push_2_subheading != blank -%}
+                              <p class="MegaMenu__PushSubHeading Heading Text--subdued u-h7">{{ block.settings.push_2_subheading | escape }}</p>
+                            {%- endif -%}
+
+                            {%- if block.settings.push_2_url != blank -%}
+                              </a>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- elsif link.title == "WOMEN" -%}
+              <div class="c-header__dropdown__container u-women">
+                <div class="c-header__dropdown__container__inner u-wide">
+                  <div class="c-header__dropdown__container__inner__flex">
+                    <div class="c-header__dropdown__container__block">
+                      <a href="{{ locale_url }}collections/shoulder-bag" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          SHOULDER BAG
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          双肩包
+                        {%- else -%}
+                          ショルダーバッグ
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/arianna">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-1.jpg' | asset_url }}" alt="ARIANNA フラップ付ショルダーバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">ARIANNA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Shoulder bag with flap
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  带翻盖的单肩包
+                                {%- else -%}
+                                  フラップ付ショルダーバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "arianna" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/arianna-ii">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-2.jpg' | asset_url }}" alt="ARIANNA II フラップ付ショルダーバッグ(S)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">ARIANNA II</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Shoulder bag with flap (S)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  带翻盖的单肩包(S)
+                                {%- else -%}
+                                  フラップ付ショルダーバッグ(S)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "arianna-ii" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+						            <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/bianca">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_bianca.jpg?v=1642944873" alt="BIANCA ショルダーバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">BIANCA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Shoulder bag
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  单肩包
+                                {%- else -%}
+                                  ショルダーバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "bianca" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/felix">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-3.jpg' | asset_url }}" alt="FELIX 4WAYミニショルダーバッグ(S)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">FELIX</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  4WAY mini shoulder bag (S)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  4WAY迷你单肩包(S)
+                                {%- else -%}
+                                  4WAYミニショルダーバッグ(S)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "felix" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/eddy">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-4.jpg' | asset_url }}" alt="EDDY 3WAYマルチショルダーバッグ(M)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">EDDY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  3WAY multi-shoulder bag (M)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  3WAY多肩包(M)
+                                {%- else -%}
+                                  3WAYマルチショルダーバッグ(M)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "eddy" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/malla">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-5.jpg' | asset_url }}" alt="MALLA チェーンストラップ付ショルダーバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">MALLA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Shoulder bag with chain strap
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  带链子的单肩包
+                                {%- else -%}
+                                  チェーンストラップ付ショルダーバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "malla" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/tala">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown1-6.jpg' | asset_url }}" alt="TALA チェーンストラップ付クラッチバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">TALA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Clutch bag with chain strap
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  带链子的手拿包
+                                {%- else -%}
+                                  チェーンストラップ付クラッチバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "shoulder-bag" %}
+                                  {% assign product_handle = "tala" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+
+                      <a href="{{ locale_url }}collections/rucksuck" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          RUCKSACK
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          肩背式背包
+                        {%- else -%}
+                          リュック
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/billy">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown2-1.jpg' | asset_url }}" alt="BILLY 2wayリュック"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">BILLY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Rucksack
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  肩背式背包
+                                {%- else -%}
+                                  2wayリュック
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "rucksuck" %}
+                                  {% assign product_handle = "billy" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+                    <div class="c-header__dropdown__container__block">
+                      <a href="{{ locale_url }}collections/tote" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          TOTE BAG
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          手提袋
+                        {%- else -%}
+                          トートバッグ
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/alex">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_alex.jpg?v=1642944873" alt="ALEX トートバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">ALEX</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tote bag
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手提袋
+                                {%- else -%}
+                                  トートバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "tote" %}
+                                  {% assign product_handle = "alex" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/gina">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown3-2.jpg' | asset_url }}" alt="GINA トートバッグ(L)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">GINA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tote bag (L)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手提袋(L)
+                                {%- else -%}
+                                  トートバッグ(L)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "tote" %}
+                                  {% assign product_handle = "gina" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/gina-ii">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_gina-ii.jpg?v=1642944873" alt="GINA II トートバッグ(M)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">GINA II</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tote bag (M)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手提袋(M)
+                                {%- else -%}
+                                  トートバッグ(M)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "tote" %}
+                                  {% assign product_handle = "gina-ii" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/gina-baby">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown3-4.jpg' | asset_url }}" alt="GINA baby トートバッグ(S)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">GINA baby</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tote bag (S)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手提袋(S)
+                                {%- else -%}
+                                  トートバッグ(S)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "tote" %}
+                                  {% assign product_handle = "gina-baby" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+
+                      <a href="{{ locale_url }}collections/purse" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          WALLET
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          钱包
+                        {%- else -%}
+                          財布
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/stella">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-1.jpg' | asset_url }}" alt="STELLA ふくさ財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">STELLA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Fukusa wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  福草钱包
+                                {%- else -%}
+                                  ふくさ財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "purse" %}
+                                  {% assign product_handle = "stella" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/luna">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-2.jpg' | asset_url }}" alt="LUNA 三つ折り財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">LUNA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tri-fold wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  三折式皮夹
+                                {%- else -%}
+                                  三つ折り財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "purse" %}
+                                  {% assign product_handle = "luna" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/danny">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-3.jpg' | asset_url }}" alt="DANNY 長財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">DANNY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Long wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  长钱包
+                                {%- else -%}
+                                  長財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "purse" %}
+                                  {% assign product_handle = "danny" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/danny-small">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-4.jpg' | asset_url }}" alt="DANNY 二つ折り財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">DANNY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Bi-fold wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  双折式钱包
+                                {%- else -%}
+                                  二つ折り財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "purse" %}
+                                  {% assign product_handle = "danny-small" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+                    <div class="c-header__dropdown__container__block">
+                      <a href="{{ locale_url }}collections/bag-accessories" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          BAG ACCESSORIES
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          包袋配件
+                        {%- else -%}
+                          バッグアクセサリー
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/hanna">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown5-1.jpg' | asset_url }}" alt="HANNA フラップカバー"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">HANNA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Flap cover
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  翻板盖
+                                {%- else -%}
+                                  フラップカバー
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "bag-accessories" %}
+                                  {% assign product_handle = "hanna" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/linda">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown5-2.jpg' | asset_url }}" alt="LINDA タッセルチャーム"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">LINDA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tassel charm
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  流苏吊饰
+                                {%- else -%}
+                                  タッセルチャーム
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "bag-accessories" %}
+                                  {% assign product_handle = "linda" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/linda-mini">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown5-3.jpg' | asset_url }}" alt="LINDA mini タッセルチャーム(ミニ)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">LINDA mini</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tassel charm (mini)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  流苏吊饰（迷你）
+                                {%- else -%}
+                                  タッセルチャーム(ミニ)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "bag-accessories" %}
+                                  {% assign product_handle = "linda-mini" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+
+                      <a href="{{ locale_url }}collections/goods" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          SMALL ITEMS
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          小件物品
+                        {%- else -%}
+                          小物アイテム
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/sheryl">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-1.jpg' | asset_url }}" alt="SHERYL スマートフォンケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">SHERYL</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Smartphone case
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  智能手机壳
+                                {%- else -%}
+                                  スマートフォンケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "sheryl" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/eva">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-2.jpg' | asset_url }}" alt="EVA カードケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">EVA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Card case
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  卡片盒
+                                {%- else -%}
+                                  カードケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "eva" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/joanna">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-3.jpg' | asset_url }}" alt="JOANNA アイグラスケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">JOANNA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Eyeglass case
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  眼镜盒
+                                {%- else -%}
+                                  アイグラスケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "joanna" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/victoria">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-4.jpg' | asset_url }}" alt="VICTORIA 弁護士日誌カバー"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">VICTORIA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Lawyer diary cover
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  律师日记封面
+                                {%- else -%}
+                                  弁護士日誌カバー
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "victoria" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/olivia">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-5.jpg' | asset_url }}" alt="OLIVIA リバーシブルベルト"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">OLIVIA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Belt
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  腰带
+                                {%- else -%}
+                                  リバーシブルベルト
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "olivia" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+                    <div class="c-header__dropdown__container__block">
+                      <a href="{{ locale_url }}collections/accessories" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          ACCESSORIES
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          配件
+                        {%- else -%}
+                          アクセサリー
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/milla">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown7-1.jpg' | asset_url }}" alt="MILLA バングル"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">MILLA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Bangle
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手镯
+                                {%- else -%}
+                                  バングル
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "accessories" %}
+                                  {% assign product_handle = "milla" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/julia">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown7-2.jpg' | asset_url }}" alt="JULIA ピアス"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">JULIA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Earrings
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  耳环
+                                {%- else -%}
+                                  ピアス
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "accessories" %}
+                                  {% assign product_handle = "julia" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/nicola">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown7-3.jpg' | asset_url }}" alt="NICOLA ネックレス"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">NICOLA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Necklace
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  项链
+                                {%- else -%}
+                                  ネックレス
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "accessories" %}
+                                  {% assign product_handle = "nicola" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/noa">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown7-4.jpg' | asset_url }}" alt="NOA リング"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">NOA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Ring
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  戒指
+                                {%- else -%}
+                                  リング
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "accessories" %}
+                                  {% assign product_handle = "noa" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+
+                      <a href="{{ locale_url }}collections/social-support" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+							Employment support for people with disabilities
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+							对残疾人的就业支持
+                        {%- else -%}
+							障がい者雇用支援
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/cordband-handicapped">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+									Code Band(S)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+									绳带(S)
+                                {%- else -%}
+									コードバンド(S)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "social-support" %}
+                                  {% assign product_handle = "cordband-handicapped" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/coincase-handicapped">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_coincase-handicapped.jpg?v=1643092124" alt="コインケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+									Coin Purse
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+									硬币钱包
+                                {%- else -%}
+									コインケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "social-support" %}
+                                  {% assign product_handle = "coincase-handicapped" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+					  </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+
+                      {%- comment -%}
+                      <ul class="c-header__dropdown__noimglist">
+                        <li class="c-header__dropdown__noimglist__item">
+                          <a href="{{ routes.root_url }}collections/upcycling">アップサイクル</a>
+                        </li>
+                        <li class="c-header__dropdown__noimglist__item">
+                          <a href="{{ routes.root_url }}collections/social-support">障がい者雇用支援</a>
+                        </li>
+                        <li class="c-header__dropdown__noimglist__item">
+                          <a href="{{ routes.root_url }}collections/recycling">リサイクル</a>
+                        </li>
+                      </ul>
+                      <!-- /.c-header__dropdown__noimglist -->
+                      {%- endcomment -%}
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+					<div class="c-header__dropdown__container__block">
+						<a href="{{ locale_url }}collections/upcycling" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								UPCYCLING
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								升级改造
+							{%- else -%}
+								アップサイクル
+							{%- endif -%}
+						</a>
+						<ul class="c-header__dropdown__imglist">
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/3set-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_3set-upcycle.jpg?v=1643092124" alt="小物3点セット"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											3-piece set of accessories
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											一套3件小物品
+										{%- else -%}
+											小物3点セット
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "3set-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/mini-bag-charm-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_mini-bag-charm-upcycle.jpg?v=1643544010" alt="ミニチュアバッグチャーム"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Miniature Bag Charm
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											迷你包挂件
+										{%- else -%}
+											ミニチュアバッグチャーム
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "mini-bag-charm-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/pouch-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_pouch-upcycle.jpg?v=1643092124" alt="ポーチ"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Pouch
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											小袋
+										{%- else -%}
+											ポーチ
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "pouch-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+                            <li class="c-header__dropdown__imglist__item">
+                              <a href="{{ locale_url }}products/cordband-handicapped">
+                                <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド"></figure>
+                                <div class="c-header__dropdown__imglist__textbox">
+                                  <p class="c-header__dropdown__imglist__name--jp">
+                                    {%- if request.locale.iso_code == 'en' -%}
+                                        Code Band(S)
+                                    {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                        绳带(S)
+                                    {%- else -%}
+                                        コードバンド(S)
+                                    {%- endif -%}
+                                  </p>
+                                    <p class="c-header__dropdown__imglist__price">
+                                      {% assign collection_handle = "social-support" %}
+                                      {% assign product_handle = "cordband-handicapped" %}
+                                      {%- assign product_list = collections[collection_handle].products -%}
+                                      {% for p in product_list %}
+                                        {% if p.handle == product_handle %}
+                                            {{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                        {% endif %}
+                                      {% endfor %}
+                                    </p>
+                                </div>
+                              </a>
+                            </li>
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/cordband-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-upcycle.jpg?v=1643092124" alt="コードバンド(M)"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Cord bands(M)
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											绳带(M)
+										{%- else -%}
+											コードバンド(M)
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "cordband-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/coincase-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_coincase-upcycle.jpg?v=1643092124" alt="コインケース"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Coin Purse
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											零钱包
+										{%- else -%}
+											コインケース
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "coincase-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/glassmarker">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_glassmarker.jpg?v=1643092124" alt="グラスマーカー"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Glass Markers
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											玻璃记号笔
+										{%- else -%}
+											グラスマーカー
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "glassmarker" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+						</ul>
+						<!-- /.c-header__dropdown__imglist -->
+
+						<a href="{{ locale_url }}collections/recycling" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								RECYCLING
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								回收利用
+							{%- else -%}
+								リサイクル
+							{%- endif -%}
+						</a>
+						<ul class="c-header__dropdown__imglist">
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/chris">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_chris.jpg?v=1643092124" alt="CHRIS サスティナブルTシャツ"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--en">CHRIS</p>
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Sustainable T-shirt
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											可持续发展的T-shirt
+										{%- else -%}
+											サスティナブルTシャツ
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "recycling" %}
+											{% assign product_handle = "chris" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+						</ul>
+						<!-- /.c-header__dropdown__imglist -->
+					</div>
+                    <!-- /.c-header__dropdown__container__block -->
+				  </div>
+                  <!-- /.c-header__dropdown__container__inner__flex -->
+                  {%- comment -%}<div class="c-header__dropdown__container__inner__padding_adjust"></div>{%- endcomment -%}
+                </div>
+                <!-- /.c-header__dropdown__container__inner -->
+              </div>
+              <!-- /.c-header__dropdown__container -->
+            {%- elsif link.title == "MEN" -%}
+              <div class="c-header__dropdown__container u-men">
+                <div class="c-header__dropdown__container__inner u-wide">
+                  <div class="c-header__dropdown__container__inner__flex">
+                    <div class="c-header__dropdown__container__block">
+                      <a href="{{ locale_url }}collections/mens-bag" class="c-header__dropdown__container__block__title">
+                        {%- if request.locale.iso_code == 'en' -%}
+                          BAG
+                        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                          双肩包
+                        {%- else -%}
+                          バッグ
+                        {%- endif -%}
+                      </a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/alex">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown_men_1-1.jpg' | asset_url }}" alt="ALEX トートバッグ"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">ALEX</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Tote bag
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  手提袋
+                                {%- else -%}
+                                  トートバッグ
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-bag" %}
+                                  {% assign product_handle = "alex" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/billy">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown_men_1-2.jpg' | asset_url }}" alt="BILLY 2wayリュック"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">BILLY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Rucksack
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  肩背式背包
+                                {%- else -%}
+                                  2wayリュック
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-bag" %}
+                                  {% assign product_handle = "billy" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+						            <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/eddy">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown_men_1-3.jpg' | asset_url }}" alt="EDDY 3WAYマルチショルダーバッグ(M)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">EDDY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  3WAY multi-shoulder bag (M)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  3WAY多肩包(M)
+                                {%- else -%}
+                                  3WAYマルチショルダーバッグ(M)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-bag" %}
+                                  {% assign product_handle = "eddy" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/felix">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown_men_1-4.jpg' | asset_url }}" alt="FELIX 4WAYミニショルダーバッグ(S)"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">FELIX</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  4WAY mini shoulder bag (S)
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  4WAY迷你单肩包(S)
+                                {%- else -%}
+                                  4WAYミニショルダーバッグ(S)
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-bag" %}
+                                  {% assign product_handle = "felix" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+                    <div class="c-header__dropdown__container__block">
+						<a href="{{ locale_url }}collections/mens-goods" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								SMALL ITEMS
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								小件物品
+							{%- else -%}
+								小物アイテム
+							{%- endif -%}
+						</a>
+                      <ul class="c-header__dropdown__imglist">
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/sheryl">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-1.jpg' | asset_url }}" alt="SHERYL スマートフォンケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">SHERYL</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Smartphone case
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  智能手机壳
+                                {%- else -%}
+                                  スマートフォンケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-goods" %}
+                                  {% assign product_handle = "sheryl" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/eva">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-2.jpg' | asset_url }}" alt="EVA カードケース"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">EVA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Card case
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  卡片盒
+                                {%- else -%}
+                                  カードケース
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-goods" %}
+                                  {% assign product_handle = "eva" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/danny">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-3.jpg' | asset_url }}" alt="DANNY 長財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">DANNY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Long wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  长钱包
+                                {%- else -%}
+                                  長財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-goods" %}
+                                  {% assign product_handle = "danny" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/danny-small">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown4-4.jpg' | asset_url }}" alt="DANNY 二つ折り財布"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">DANNY</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Bi-fold wallet
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  双折式钱包
+                                {%- else -%}
+                                  二つ折り財布
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "mens-goods" %}
+                                  {% assign product_handle = "danny-small" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+
+                        <li class="c-header__dropdown__imglist__item">
+                          <a href="{{ locale_url }}products/victoria">
+                            <figure class="c-header__dropdown__imglist__item__img"><img src="{{ 'img-header_dropdown6-4.jpg' | asset_url }}" alt="VICTORIA 弁護士日誌カバー"></figure>
+                            <div class="c-header__dropdown__imglist__textbox">
+                              <p class="c-header__dropdown__imglist__name--en">VICTORIA</p>
+                              <p class="c-header__dropdown__imglist__name--jp">
+                                {%- if request.locale.iso_code == 'en' -%}
+                                  Lawyer diary cover
+                                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                  律师日记封面
+                                {%- else -%}
+                                  弁護士日誌カバー
+                                {%- endif -%}
+                              </p>
+                                <p class="c-header__dropdown__imglist__price">
+                                  {% assign collection_handle = "goods" %}
+                                  {% assign product_handle = "victoria" %}
+                                  {%- assign product_list = collections[collection_handle].products -%}
+                                  {% for p in product_list %}
+                                    {% if p.handle == product_handle %}
+                                  		{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                    {% endif %}
+                                  {% endfor %}
+                                </p>
+                            </div>
+                          </a>
+                        </li>
+                        <!-- /.c-header__dropdown__imglist__item -->
+                      </ul>
+                      <!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+
+					<div class="c-header__dropdown__container__block">
+						<a href="{{ locale_url }}collections/upcycling" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								UPCYCLING
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								升级改造
+							{%- else -%}
+								アップサイクル
+							{%- endif -%}
+						</a>
+						<ul class="c-header__dropdown__imglist">
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/3set-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_3set-upcycle.jpg?v=1643092124" alt="小物3点セット"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											3-piece set of accessories
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											一套3件小物品
+										{%- else -%}
+											小物3点セット
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "3set-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/mini-bag-charm-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_mini-bag-charm-upcycle.jpg?v=1643544010" alt="ミニチュアバッグチャーム"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Miniature Bag Charm
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											迷你包挂件
+										{%- else -%}
+											ミニチュアバッグチャーム
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "mini-bag-charm-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/pouch-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_pouch-upcycle.jpg?v=1643092124" alt="ポーチ"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Pouch
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											小袋
+										{%- else -%}
+											ポーチ
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "pouch-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+                            <li class="c-header__dropdown__imglist__item">
+                              <a href="{{ locale_url }}products/cordband-handicapped">
+                                <figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド"></figure>
+                                <div class="c-header__dropdown__imglist__textbox">
+                                  <p class="c-header__dropdown__imglist__name--jp">
+                                    {%- if request.locale.iso_code == 'en' -%}
+                                        Code Band(S)
+                                    {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                                        绳带(S)
+                                    {%- else -%}
+                                        コードバンド(S)
+                                    {%- endif -%}
+                                  </p>
+                                    <p class="c-header__dropdown__imglist__price">
+                                      {% assign collection_handle = "social-support" %}
+                                      {% assign product_handle = "cordband-handicapped" %}
+                                      {%- assign product_list = collections[collection_handle].products -%}
+                                      {% for p in product_list %}
+                                        {% if p.handle == product_handle %}
+                                            {{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+                                        {% endif %}
+                                      {% endfor %}
+                                    </p>
+                                </div>
+                              </a>
+                            </li>
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/cordband-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-upcycle.jpg?v=1643092124" alt="コードバンド(M)"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Cord bands(M)
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											绳带(M)
+										{%- else -%}
+											コードバンド(M)
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "cordband-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/coincase-upcycle">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_coincase-upcycle.jpg?v=1643092124" alt="コインケース"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Coin Purse
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											零钱包
+										{%- else -%}
+											コインケース
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "coincase-upcycle" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/glassmarker">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_glassmarker.jpg?v=1643092124" alt="グラスマーカー"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Glass Markers
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											玻璃记号笔
+										{%- else -%}
+											グラスマーカー
+										{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "upcycling" %}
+											{% assign product_handle = "glassmarker" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+						</ul>
+						<!-- /.c-header__dropdown__imglist -->
+					</div>
+					<!-- /.c-header__dropdown__container__block -->
+
+                    <div class="c-header__dropdown__container__block">
+                    	<a href="{{ locale_url }}collections/social-support" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								Employment support for people with disabilities
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								对残疾人的就业支持
+							{%- else -%}
+								障がい者雇用支援
+							{%- endif -%}
+						</a>
+						<ul class="c-header__dropdown__imglist">
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/cordband-handicapped">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_cordband-handicapped.jpg?v=1643092124" alt="コードバンド"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+									<p class="c-header__dropdown__imglist__name--jp">
+										{%- if request.locale.iso_code == 'en' -%}
+											Code Band(S)
+										{%- elsif request.locale.iso_code == 'zh-CN' -%}
+											绳带(S)
+										{%- else -%}
+											コードバンド(S)
+										{%- endif -%}
+									</p>
+									<p class="c-header__dropdown__imglist__price">
+										{% assign collection_handle = "social-support" %}
+										{% assign product_handle = "cordband-handicapped" %}
+										{%- assign product_list = collections[collection_handle].products -%}
+										{% for p in product_list %}
+											{% if p.handle == product_handle %}
+												{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+											{% endif %}
+										{% endfor %}
+									</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/coincase-handicapped">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_coincase-handicapped.jpg?v=1643092124" alt="コインケース"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--jp">
+											{%- if request.locale.iso_code == 'en' -%}
+												Coin Purse
+											{%- elsif request.locale.iso_code == 'zh-CN' -%}
+												硬币钱包
+											{%- else -%}
+												コインケース
+											{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "social-support" %}
+											{% assign product_handle = "coincase-handicapped" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+												{% if p.handle == product_handle %}
+													{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+												{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+						</ul>
+						<!-- /.c-header__dropdown__imglist -->
+
+					  <a href="{{ locale_url }}collections/recycling" class="c-header__dropdown__container__block__title">
+							{%- if request.locale.iso_code == 'en' -%}
+								RECYCLING
+							{%- elsif request.locale.iso_code == 'zh-CN' -%}
+								回收利用
+							{%- else -%}
+								リサイクル
+							{%- endif -%}
+						</a>
+						<ul class="c-header__dropdown__imglist">
+							<li class="c-header__dropdown__imglist__item">
+								<a href="{{ locale_url }}products/chris">
+									<figure class="c-header__dropdown__imglist__item__img"><img src="https://cdn.shopify.com/s/files/1/1528/3857/files/img-menu_chris.jpg?v=1643092124" alt="CHRIS サスティナブルTシャツ"></figure>
+									<div class="c-header__dropdown__imglist__textbox">
+										<p class="c-header__dropdown__imglist__name--en">CHRIS</p>
+										<p class="c-header__dropdown__imglist__name--jp">
+											{%- if request.locale.iso_code == 'en' -%}
+												Sustainable T-shirt
+											{%- elsif request.locale.iso_code == 'zh-CN' -%}
+												可持续发展的T-shirt
+											{%- else -%}
+												サスティナブルTシャツ
+											{%- endif -%}
+										</p>
+										<p class="c-header__dropdown__imglist__price">
+											{% assign collection_handle = "recycling" %}
+											{% assign product_handle = "chris" %}
+											{%- assign product_list = collections[collection_handle].products -%}
+											{% for p in product_list %}
+												{% if p.handle == product_handle %}
+													{{ p.price_min | money }}{%- if p.price_max > p.price_min -%} ~ {%- endif -%}
+												{% endif %}
+											{% endfor %}
+										</p>
+									</div>
+								</a>
+							</li>
+							<!-- /.c-header__dropdown__imglist__item -->
+						</ul>
+						<!-- /.c-header__dropdown__imglist -->
+                    </div>
+                    <!-- /.c-header__dropdown__container__block -->
+                  </div>
+                  <!-- /.c-header__dropdown__container__inner__flex -->
+                  {%- comment -%}<div class="c-header__dropdown__container__inner__padding_adjust"></div>{%- endcomment -%}
+                </div>
+                <!-- /.c-header__dropdown__container__inner -->
+              </div>
+              <!-- /.c-header__dropdown__container -->
+            {%- elsif link.links != blank -%}
+              <div class="c-header__dropdown__container u-{{- link.title | escape | downcase -}}">
+                <div class="c-header__dropdown__container__inner">
+                  {% assign link_loop_limit = 8 %}
+                  {% assign link_loop_offset = 0 %}
+                  {% for i in (1..link_loop_limit) %}
+                    <ul class="c-header__dropdown__list">
+                      {%- for sub_link in link.links limit:link_loop_limit offset:link_loop_offset -%}
+                        {% assign sublink_externalLink = false %}
+                        {% if sub_link.url contains 'https' or sub_link.url contains 'http' %}
+                          {% unless sub_link.url contains shop.url or sub_link.url contains shop.secure_url %}
+                            {% assign sublink_externalLink = true %}
+                          {% endunless %}
+                        {% endif %}
+
+                        <li class="c-header__dropdown__list__item">
+                          <a href="{{ sub_link.url }}" class="c-header__dropdown__list__item__link" {% if sublink_externalLink %}target="_blank" rel="noopener"{% endif %}>
+                            <span class="{% if sublink_externalLink %}c-externalLink{% endif %}">{{ sub_link.title | escape }}</span>
+                          </a>
+                          {% comment %} {%- if sub_link.links != blank -%}
+                            <div class="DropdownMenu" aria-hidden="true">
+                              <ul class="Linklist">
+                                {%- for sub_sub_link in sub_link.links -%}
+                                  <li class="Linklist__Item">
+                                    <a href="{{ sub_sub_link.url }}" class="Link Link--secondary">{{ sub_sub_link.title | escape }}</a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                          {%- endif -%} {% endcomment %}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                    {% assign link_loop_offset = link_loop_offset | plus:link_loop_limit %}
+                  {% endfor %}
+                </div>
+                <!-- /.c-header__dropdown__container__inner -->
+              </div>
+              <!-- /.c-header__dropdown__container -->
+
+              {% comment %} <div class="DropdownMenu" aria-hidden="true">
+                <ul class="Linklist">
+                  {%- for sub_link in link.links -%}
+                    <li class="aaa Linklist__Item" {% if sub_link.links != blank %}aria-haspopup="true"{% endif %}>
+                      <a href="{{ sub_link.url }}" class="Link Link--secondary">{{ sub_link.title | escape }} {% if sub_link.links != blank %}{% render 'icon' with 'select-arrow-right' %}{% endif %}</a>
+
+                      {%- if sub_link.links != blank -%}
+                        <div class="DropdownMenu" aria-hidden="true">
+                          <ul class="Linklist">
+                            {%- for sub_sub_link in sub_link.links -%}
+                              <li class="Linklist__Item">
+                                <a href="{{ sub_sub_link.url }}" class="Link Link--secondary">{{ sub_sub_link.title | escape }}</a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div> {% endcomment %}
+            {%- endif -%}
+          {%- endcapture -%}
+
+          {% assign externalLink = false %}
+          {% if link.url contains 'https' or link.url contains 'http' %}
+            {% unless link.url contains shop.url or link.url contains shop.secure_url %}
+              {% assign externalLink = true %}
+            {% endunless %}
+          {% endif %}        
+        
+          <li class="HorizontalList__Item {% if link.links == blank and link.active %}is-active{% endif %} c-header__listitem{% if menu_item_dropdown != blank %} js-dropdown{% endif %}" {% if menu_item_dropdown != blank %}aria-haspopup="true"{% endif %}>
+            <a href="{{ link.url }}" class="c-header__listitemlink" {% if externalLink %}target="_blank" rel="noopener"{% endif %}>
+              <span class="{% if externalLink %}c-externalLink{% endif %}">{{- link.title | escape -}}</span>
+
+              {% comment %} {%- if use_mega_menu or menu_item_dropdown == blank -%}
+                <span class="Header__LinkSpacer">{{ link.title | escape }}</span>
+              {%- endif -%} {% endcomment %}
+            </a>
+
+            {{- menu_item_dropdown -}}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    {%- capture header_logo -%}
+      <a href="{{ routes.root_url }}" class="Header__LogoLink">
+        {%- if section.settings.logo != blank -%}
+          {%- capture image_size -%}{{ section.settings.logo_max_width }}x{%- endcapture -%}
+
+          <img class="Header__LogoImage Header__LogoImage--primary"
+               src="{{ section.settings.logo | img_url: image_size }}"
+               srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+               width="{{ section.settings.logo.width }}"
+               {% comment %}height="{{ section.settings.logo.height }}"{% endcomment %}
+               alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
+
+          {%- if use_transparent_header and section.settings.transparent_logo != blank -%}
+            <img class="Header__LogoImage Header__LogoImage--transparent"
+                 src="{{ section.settings.transparent_logo | img_url: image_size }}"
+                 srcset="{{ section.settings.transparent_logo | img_url: image_size }} 1x, {{ section.settings.transparent_logo | img_url: image_size, scale: 2 }} 2x"
+                 width="{{ section.settings.logo.width }}"
+                 {% comment %}height="{{ section.settings.logo.height }}"{% endcomment %}
+                 alt="{{ section.settings.transparent_logo.alt | default: shop.name | escape }}">
+          {%- endif -%}
+        {%- else -%}
+          <span class="Heading u-h4">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    {%- endcapture -%}
+
+    <div class="Header__FlexItem Header__FlexItem--logo">
+      {%- if template == 'index' -%}
+        <h1 class="Header__Logo">{{ header_logo }}</h1>
+      {%- else -%}
+        <div class="Header__Logo">{{ header_logo }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="Header__FlexItem Header__FlexItem--fill">
+      {%- unless section.settings.show_icons or use_sidebar_menu -%}
+        <nav class="Header__SecondaryNav hidden-phone">
+          <ul class="HorizontalList HorizontalList--spacingLoose hidden-pocket hidden-lap">
+            {% comment %}
+            {%- if localization_form != blank and section.settings.navigation_style == 'inline' or section.settings.navigation_style == 'logoLeft' -%}
+              <li class="HorizontalList__Item">
+                {{ localization_form }}
+              </li>
+            {%- endif -%}
+            {% endcomment %}
+
+            {%- if shop.customer_accounts_enabled -%}
+              <li class="HorizontalList__Item">
+                <a href="{{ routes.account_url }}" class="Heading Link Link--primary Text--subdued u-h8">
+                  {{- 'header.navigation.account' | t -}}
+                </a>
+              </li>
+            {%- endif -%}
+
+            <li class="HorizontalList__Item">
+              <a href="{{ routes.search_url }}" class="Heading Link Link--primary Text--subdued u-h8" data-action="toggle-search">{{ 'header.navigation.search' | t }}</a>
+            </li>
+
+            <li class="HorizontalList__Item">
+              <a href="{{ routes.cart_url }}" class="Heading u-h6" {% unless template == 'cart' or settings.cart_type == 'page' %}data-action="open-drawer" data-drawer-id="sidebar-cart" aria-label="{{ 'header.navigation.open_cart' | t }}"{% endunless %}>{{ 'header.navigation.cart' | t }} (<span class="Header__CartCount">{% comment %}{{ cart.item_count }}{% endcomment %}{%- render 'bold-options-hybrid-cart-item-count' with cart -%}</span>)</a>
+            </li>
+          </ul>
+        </nav>
+      {% comment %}
+      {%- elsif localization_form != blank -%}
+        <nav class="Header__SecondaryNav">
+          <ul class="HorizontalList HorizontalList--spacingLoose hidden-pocket hidden-lap">
+            <li class="HorizontalList__Item">
+              {{ localization_form }}
+            </li>
+          </ul>
+        </nav>
+      {% endcomment %}
+      {%- endunless -%}
+      {%- if shop.customer_accounts_enabled and section.settings.show_icons or use_sidebar_menu -%}
+        <a href="{{ routes.account_url }}" class="Header__Icon Icon-Wrapper Icon-Wrapper--clickable hidden-phone c-header__iconlist">
+          {%- render 'icon' with 'account' -%}
+        </a>
+      {%- endif -%}
+
+      {% comment %}
+      <a href="{{ routes.search_url }}" class="Header__Icon Icon-Wrapper Icon-Wrapper--clickable {% unless section.settings.show_icons or use_sidebar_menu %}hidden-desk{% endunless %}" data-action="toggle-search" aria-label="{{ 'header.navigation.search' | t }}">
+        <span class="hidden-tablet-and-up">{%- render 'icon' with 'search' -%}</span>
+        <span class="hidden-phone">{%- render 'icon' with 'search-desktop' -%}</span>
+      </a>
+      {% endcomment %}
+     
+      <a href="/apps/advanced-wishlist" class="c-header__iconlist">
+        {%- render 'icon' with 'favorite' -%}
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="Header__Icon Icon-Wrapper Icon-Wrapper--clickable {% unless section.settings.show_icons or use_sidebar_menu %}hidden-desk{% endunless %} c-header__iconlist" {% if settings.cart_type == 'drawer' %}data-action="open-drawer" data-drawer-id="sidebar-cart" aria-expanded="false" aria-label="{{ 'header.navigation.open_cart' | t }}"{% endif %}>
+        <span class="hidden-tablet-and-up">{%- render 'icon' with 'cart' -%}</span>
+        <span class="hidden-phone">{%- render 'icon' with 'cart-desktop' -%}</span>
+        <span class="Header__CartDot {% if cart.item_count > 0 %}is-visible{% endif %}"></span>
+      </a>
+
+      <!-- 言語選択 -->
+      {{- localization_form -}}
+    </div>
+  </div>
+
+</header>
+
+<style>
+  {%- if section.settings.use_sticky_header -%}
+    :root {
+      --use-sticky-header: 1;
+      --use-unsticky-header: 0;
+    }
+
+    .shopify-section--header {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+  {%- else -%}
+    :root {
+      --use-sticky-header: 0;
+      --use-unsticky-header: 1;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.logo -%}
+    .Header__LogoImage {
+      max-width: {{ section.settings.logo_max_width }}px;
+    }
+
+    @media screen and (max-width: 640px) {
+      .Header__LogoImage {
+        max-width: {{ section.settings.mobile_logo_max_width }}px;
+      }
+    }
+  {%- endif -%}
+
+  {%- if use_transparent_header -%}
+    :root {
+      --header-is-not-transparent: 0;
+      --header-is-transparent: 1;
+    }
+
+    .shopify-section--header {
+      margin-bottom: calc(-1 * var(--header-height));
+    }
+
+    .supports-sticky .Search[aria-hidden="true"] + .Header--transparent {
+      {%- if section.settings.show_transparent_header_border -%}
+        box-shadow: 0 -1px {{ section.settings.transparent_text_color | color_modify: 'alpha', 0.25 }} inset;
+      {%- else -%}
+        box-shadow: none;
+      {%- endif -%}
+
+      color: {{ section.settings.transparent_text_color }};
+    }
+  {%- else -%}
+    :root {
+      --header-is-not-transparent: 1;
+      --header-is-transparent: 0;
+    }
+  {%- endif -%}
+</style>
+
+<script>
+  document.documentElement.style.setProperty('--header-height', document.getElementById('shopify-section-header').offsetHeight + 'px');
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shopify-section--header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_sticky_header",
+      "label": "Use sticky header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Image",
+      "info": "200 x 60px .png recommended"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 350,
+      "step": 5,
+      "unit": "px",
+      "label": "Image width",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_width",
+      "min": 50,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile image width",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Currency selector",
+      "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show currency selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "Navigation style",
+      "info": "Setting will default to center style if screen width cannot fit all the links.",
+      "options": [
+        {
+          "value": "sidebar",
+          "label": "Sidebar"
+        },
+        {
+          "value": "inline",
+          "label": "Inline"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "logoLeft",
+          "label": "Logo left"
+        }
+      ],
+      "default": "inline"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icons",
+      "label": "Show icons",
+      "info": "Text for account, search and cart are replaced by icons on desktop.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Transparent header"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Enable on homepage",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header_collection",
+      "label": "Enable on collection pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_transparent_header_border",
+      "label": "Show separation border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "label": "Text/icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Logo image",
+      "info": "200 x 60px .png recommended"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "navigation_mega_menu",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. [Learn more](http://support.maestrooo.com/article/149-navigation-enabling-and-configuring-mega-menu)."
+        },
+        {
+          "type": "header",
+          "content": "Image push 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "push_1_image",
+          "label": "Image",
+          "info": "740 x 460 px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "push_1_heading",
+          "label": "Heading",
+          "default": "Example heading"
+        },
+        {
+          "type": "text",
+          "id": "push_1_subheading",
+          "label": "Sub-heading",
+          "default": "Example sub-heading"
+        },
+        {
+          "type": "url",
+          "id": "push_1_url",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Image push 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "push_2_image",
+          "label": "Image",
+          "info": "740 x 460 px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "push_2_heading",
+          "label": "Heading",
+          "default": "Example heading"
+        },
+        {
+          "type": "text",
+          "id": "push_2_subheading",
+          "label": "Sub-heading",
+          "default": "Example sub-heading"
+        },
+        {
+          "type": "url",
+          "id": "push_2_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

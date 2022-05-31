@@ -1,0 +1,315 @@
+{%- if request.locale.iso_code == 'en' or request.locale.iso_code == 'zh-CN' -%}
+  {%- assign locale_url = routes.root_url | append: "/" -%}
+{%- else -%}
+  {%- assign locale_url = routes.root_url -%}
+{%- endif -%}
+
+<div id="section-{{ section.id }}" class="Section" data-section-id="{{ section.id }}" data-section-type="article-list">
+  {%- if blog.articles_count == 0 -%}
+    <div class="EmptyState">
+      <div class="Container">
+        <h1 class="EmptyState__Title Heading u-h5">{{ 'blog.general.no_articles' | t: blog_title: blog.title }}</h1>
+        <a href="{{ routes.root_url }}" class="EmptyState__Action Button Button--primary">{{ 'blog.general.empty_button' | t }}</a>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="Blog">
+      <div class="c-container">
+        <header class="PageHeader">
+          <div class="SectionHeader SectionHeader--center">
+            <h1 class="SectionHeader__Heading Heading u-h1">
+              <a href="{{ locale_url }}blogs/{{ blog.handle }}">{{- blog.title -}}</a>
+
+              {%- if section.settings.show_rss -%}
+                <a href="{{ blog.url }}.atom" target="_blank" class="Blog__RssLink Link Link--secondary">{% render 'icon' with 'rss' %}</a>
+              {%- endif -%}
+            </h1>
+
+            <ul class="Blog__TagList HorizontalList HorizontalList--spacingExtraLoose c-pc_only blog-{{ blog.handle }}">
+              <li class="HorizontalList__Item">
+                <a href="{{ locale_url }}blogs/{{ blog.handle }}" class="Heading Link Link--primary Text--subdued {% if current_tags == blank %}is-active{% endif %}">{{ 'blog.general.all_tag' | t }}</a>
+              </li>
+              {%- if blog.handle == "news" -%}
+                {%- if request.locale.iso_code == 'en' -%}
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/news" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'NEWS' or current_tags contains 'news' %}is-active{% endif %}">News</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/media" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'MEDIA' or current_tags contains 'media' %}is-active{% endif %}">Media Coverage</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/event" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'EVENT' or current_tags contains 'event' %}is-active{% endif %}">Events</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/press" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'PRESS' or current_tags contains 'press' %}is-active{% endif %}">Press Release</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/csr" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'CSR' or current_tags contains 'csr' %}is-active{% endif %}">CSR Activities</a>
+                  </li>
+                {%- elsif request.locale.iso_code == 'zh-CN' -%}
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/news" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'NEWS' or current_tags contains 'news' %}is-active{% endif %}">新闻</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/media" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'MEDIA' or current_tags contains 'media' %}is-active{% endif %}">媒体报道</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/event" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'EVENT' or current_tags contains 'event' %}is-active{% endif %}">活动</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/press" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'PRESS' or current_tags contains 'press' %}is-active{% endif %}">新闻发布</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/csr" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'CSR' or current_tags contains 'csr' %}is-active{% endif %}">企业社会责任活动</a>
+                  </li>
+                {%- else -%}
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/news" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'NEWS' or current_tags contains 'news' %}is-active{% endif %}">ニュース</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/media" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'MEDIA' or current_tags contains 'media' %}is-active{% endif %}">メディア掲載</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/event" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'EVENT' or current_tags contains 'event' %}is-active{% endif %}">イベント</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/press" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'PRESS' or current_tags contains 'press' %}is-active{% endif %}">プレスリリース</a>
+                  </li>
+                  <li class="HorizontalList__Item">
+                    <a href="{{ locale_url }}blogs/news/tagged/csr" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'CSR' or current_tags contains 'csr' %}is-active{% endif %}">CSR活動</a>
+                  </li>
+                {%- endif -%}
+              {%- elsif blog.handle == "journal" -%}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/life-style" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'LIFE STYLE' or current_tags contains 'life style' %}is-active{% endif %}">LIFE STYLE</a>
+                </li>
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/sdgs" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'SDGs' or current_tags contains 'event' %}is-active{% endif %}">SDGs</a>
+                </li>
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/event" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'EVENT' or current_tags contains 'event' %}is-active{% endif %}">EVENT</a>
+                </li>
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/reserch" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'RESERCH' or current_tags contains 'event' %}is-active{% endif %}">RESERCH</a>
+                </li>
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/ambassador" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'AMBASSADOR' or current_tags contains 'event' %}is-active{% endif %}">AMBASSADOR</a>
+                </li>
+                {% comment %}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/fashion" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'FASHION' or current_tags contains 'fashion' %}is-active{% endif %}">FASHION</a>
+                </li>
+                {% endcomment %}
+                {% comment %}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/ethical-life" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'ETHICAL LIFE' or current_tags contains 'ethical life' %}is-active{% endif %}">ETHICAL LIFE</a>
+                </li>
+                {% endcomment %}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/fumikoda-story" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'FUMIKODA STORY' or current_tags contains 'fumikoda story' %}is-active{% endif %}">FUMIKODA STORY</a>
+                </li>
+                {% comment %}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/fumikoda-woman" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'FUMIKODA WOMAN' or current_tags contains 'fumikoda woman' %}is-active{% endif %}">FUMIKODA WOMAN</a>
+                </li>
+                {% endcomment %}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/journal/tagged/fumitalk" class="Heading Link Link--primary Text--subdued {% if current_tags contains 'FUMITALK' or current_tags contains 'fumitalk' %}is-active{% endif %}">FUMITALK</a>
+                </li>
+              {%- else -%}
+                {%- for tag in blog.all_tags -%}
+                <li class="HorizontalList__Item">
+                  <a href="{{ locale_url }}blogs/{{ blog.handle }}/tagged/{{ tag | handle }}" class="Heading Link Link--primary Text--subdued {% if current_tags contains tag %}is-active{% endif %}">{{ tag }}</a>
+                </li>
+              {%- endfor -%}
+            {%- endif -%}
+            </ul>
+
+            <div class="Blog__TagList-select c-sp_only">
+              <select id="js-switchBlogCategory">
+                <option value="/blogs/{{ blog.handle }}">{{ 'blog.general.all_tag' | t }}</option>
+                {%- if blog.handle == "news" -%}
+                  <option value="/blogs/news/tagged/news" {% if current_tags contains 'NEWS' or current_tags contains 'news' %}selected{% endif %}>ニュース</option>
+                  <option value="/blogs/news/tagged/media" {% if current_tags contains 'MEDIA' or current_tags contains 'media' %}selected{% endif %}>メディア掲載</option>
+                  <option value="/blogs/news/tagged/event" {% if current_tags contains 'EVENT' or current_tags contains 'event' %}selected{% endif %}>イベント</option>
+                  <option value="/blogs/news/tagged/press" {% if current_tags contains 'PRESS' or current_tags contains 'press' %}selected{% endif %}>プレスリリース</option>
+                  <option value="/blogs/news/tagged/csr" {% if current_tags contains 'CSR' or current_tags contains 'csr' %}selected{% endif %}>CSR活動</option>
+                {%- elsif blog.handle == "journal" -%}
+                  <option value="/blogs/journal/tagged/life-style" {% if current_tags contains 'LIFE STYLE' or current_tags contains 'life style' %}selected{% endif %}>LIFE STYLE</option>
+                  <option value="/blogs/journal/tagged/sdgs" {% if current_tags contains 'SDGs' or current_tags contains 'sdgs' %}selected{% endif %}>SDGs</option>
+                  <option value="/blogs/journal/tagged/event" {% if current_tags contains 'EVENT' or current_tags contains 'event' %}selected{% endif %}>EVENT</option>
+                  <option value="/blogs/journal/tagged/reserch" {% if current_tags contains 'RESERCH' or current_tags contains 'reserch' %}selected{% endif %}>RESERCH</option>
+                  <option value="/blogs/journal/tagged/ambassador" {% if current_tags contains 'AMBASSADOR' or current_tags contains 'ambassador' %}selected{% endif %}>AMBASSADOR</option>
+                  {% comment %}<option value="/blogs/journal/tagged/fashion" {% if current_tags contains 'FASHION' or current_tags contains 'fashion' %}selected{% endif %}>FASHION</option>{% endcomment %}
+                  {% comment %}<option value="/blogs/journal/tagged/ethical-life" {% if current_tags contains 'ETHICAL LIFE' or current_tags contains 'ethical life' %}selected{% endif %}>ETHICAL LIFE</option>{% endcomment %}
+                  <option value="/blogs/journal/tagged/fumikoda-story" {% if current_tags contains 'FUMIKODA STORY' or current_tags contains 'fumikoda story' %}selected{% endif %}>FUMIKODA STORY</option>
+                  {% comment %}<option value="/blogs/journal/tagged/fumikoda-woman" {% if current_tags contains 'FUMIKODA WOMAN' or current_tags contains 'fumikoda woman' %}selected{% endif %}>FUMIKODA WOMAN</option>{% endcomment %}
+                  <option value="/blogs/journal/tagged/fumitalk" {% if current_tags contains 'FUMITALK' or current_tags contains 'fumitalk' %}selected{% endif %}>FUMITALK</option>
+                {%- else -%}
+                  {%- for tag in blog.all_tags -%}
+                    <option value="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}">{{ tag }}</option>
+                  {%- endfor -%}
+                {%- endif -%}
+              </select>
+            </div>
+            <script>
+              const selected = document.getElementById("js-switchBlogCategory");
+              selected.onchange = function() {
+                  window.location.href = selected.value;
+              };
+            </script>
+          </div>
+        </header>
+
+        {%- if section.settings.show_featured_article and current_tags == blank -%}
+          {%- assign articles_per_page = 13 -%}
+        {%- else -%}
+          {%- assign articles_per_page = 12 -%}
+        {%- endif -%}
+
+        {%- if blog.handle == 'journal' -%}
+          {%- assign articles_per_page = 11 -%}
+        {%- endif -%}
+
+        {%- paginate blog.articles by articles_per_page -%}
+          {% assign is_first_article_featured = false %}
+
+          {%- if section.settings.show_featured_article and current_tags == blank and blog.articles.first.image -%}
+            {%- assign is_first_article_featured = true -%}
+          {%- endif -%}
+
+          {%- if blog.handle == 'journal' -%}
+            <div class="p-journal__wrapper">
+              <div class="p-journal__toparea">
+                <div class="p-journal__toparea__left">
+                  {%- for article in blog.articles limit: 1 -%}
+                    {%- render 'article-item', block: block, article: article -%}
+                  {%- endfor -%}
+                </div>
+
+                <div class="p-journal__toparea__right">
+                  {%- for article in blog.articles limit: 4 offset: 1 -%}
+                    {%- render 'article-item', block: block, article: article -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+              <!-- /.p-journal__toparea -->
+
+              <div class="p-journal__normalarea">
+                {%- for article in blog.articles offset: 5 -%}
+                  {%- render 'article-item', block: block, article: article -%}
+                {%- endfor -%}
+              </div>
+              <!-- /.p-journal__normalarea -->
+            </div>
+            <!-- /.p-journal__wrapper -->
+          {%- else -%}
+            <div class="ArticleListWrapper">
+              <div class="ArticleList {% if is_first_article_featured %}ArticleList--withFeatured{% endif %} Grid Grid--m">
+                {%- for article in blog.articles -%}
+                  {%- if is_first_article_featured and forloop.first -%}
+                    <div class="Grid__Cell hidden-phone">
+                      <div class="FlexboxIeFix">
+                        <div class="ImageHero ImageHero--small" style="background: url({{ article.image | img_url: '1x1', format: 'jpg' }})">
+                          <div class="ImageHero__ImageWrapper">
+                            <div class="ImageHero__Image Image--lazyLoad Image--zoomOut"
+                                data-optimumx="1.4"
+                                data-bgset="{{ article.image | img_url: mobile_size, crop: 'center' }} 750w, {{ article.image | img_url: '1000x' }} 1000w, {{ article.image | img_url: '1500x' }} 1500w">
+                            </div>
+
+                            <noscript>
+                              <div class="ImageHero__Image" style="background-image: url({{ article.image | img_url: '1000x' }})"></div>
+                            </noscript>
+                          </div>
+
+                          <div class="ImageHero__TextContent">
+                            <header class="SectionHeader">
+                              {%- if section.settings.show_category and article.tags != empty -%}
+                                <span class="SectionHeader__SubHeading Heading u-h6">{{ article.tags.first }}</span>
+                              {%- endif -%}
+
+                              <h2 class="SectionHeader__Heading Heading u-h1">
+                                <a href="{{ article.url }}">{{ article.title }}</a>
+                              </h2>
+
+                              <div class="SectionHeader__ButtonWrapper">
+                                <a href="{{ article.url }}" class="Button Button--primary">{{ 'blog.article.read_more' | t }}</a>
+                              </div>
+                            </header>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                  <div class="Grid__Cell {% if is_first_article_featured and forloop.first %}hidden-tablet-and-up{% else %}1/2--tablet 1/3--lap-and-up{% endif %}">
+                    {%- render 'article-item', article: article -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  #section-{{ section.id }} .ImageHero,
+  #section-{{ section.id }} .ImageHero .Heading {
+    color: #ffffff;
+  }
+
+  #section-{{ section.id }} .ImageHero .Button {
+    color: #1c1c1c;
+    border-color: #ffffff;
+  }
+
+  #section-{{ section.id }} .ImageHero .Button::before {
+    background-color: #ffffff;
+  }
+
+  {%- if settings.show_button_transition -%}
+    @media (-moz-touch-enabled: 0), (hover: hover) {
+      #section-{{ section.id }} .ImageHero .Button:hover {
+        color: #ffffff;
+      }
+    }
+  {%- endif -%}
+</style>
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_rss",
+      "label": "Show RSS",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show filters",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_article",
+      "label": "Show featured article",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show article category",
+      "info": "The first article's tag is used as the main category.",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

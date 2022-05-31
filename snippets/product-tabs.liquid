@@ -1,0 +1,156 @@
+{%- capture product_tabs -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'content' -%}
+        {%- if block.settings.page != blank -%}
+          {%- assign title = block.settings.page.title -%}
+          {%- assign content = block.settings.page.content -%}
+        {%- else -%}
+          {%- assign title = block.settings.title -%}
+          {%- assign content = block.settings.content -%}
+        {%- endif -%}
+
+        {%- if title != blank and content != blank -%}
+          <div class="Collapsible Collapsible--large" {{ block.shopify_attributes }}>
+            <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" aria-expanded="false">
+              {{- title -}} <span class="Collapsible__Plus"></span>
+            </button>
+
+            <div class="Collapsible__Inner">
+              <div class="Collapsible__Content">
+                <div class="Rte">
+                  {{- content -}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+      {%- when 'content_html' -%}
+        {%- if request.locale.iso_code == 'en' -%}
+          {%- assign title = block.settings.title_en -%}
+          {%- assign content = block.settings.content_en -%}
+        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+          {%- assign title = block.settings.title_cn -%}
+          {%- assign content = block.settings.content_cn -%}
+        {%- else -%}
+          {%- assign title = block.settings.title -%}
+	      {%- assign content = block.settings.content -%}
+        {%- endif -%}
+
+        {%- if title != blank and content != blank -%}
+          <div class="Collapsible Collapsible--large" {{ block.shopify_attributes }}>
+            <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" aria-expanded="false">
+              {{- title -}}
+              <span class="Collapsible__Plus"></span>
+            </button>
+
+            <div class="Collapsible__Inner">
+              <div class="Collapsible__Content">
+                <div class="Rte">
+                  {{- content -}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+      {%- when 'content_liquid' -%}
+        {%- if request.locale.iso_code == 'en' -%}
+          {%- assign title = block.settings.title_en -%}
+        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+          {%- assign title = block.settings.title_cn -%}
+        {%- else -%}
+          {%- assign title = block.settings.title -%}
+        {%- endif -%}
+        {%- assign content = block.settings.content -%}
+
+        {%- if title != blank and content != blank -%}
+          <div class="Collapsible Collapsible--large" {{ block.shopify_attributes }}>
+            <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" {% if title == "アイテム紹介" or title == "Item Introduction" or title == "项目介绍" %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
+              {{- title -}}
+              <span class="Collapsible__Plus"></span>
+            </button>
+
+            <div class="Collapsible__Inner"{% if title == "アイテム紹介" or title == "Item Introduction" or title == "项目介绍" %} style="overflow: visible; height: auto;"{% endif %}>
+              <div class="Collapsible__Content">
+                <div class="Rte">
+                  {{- content -}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+      {%- when 'reviews' -%}
+        <div class="Collapsible Collapsible--large" {{ block.shopify_attributes }}>
+          {%- comment -%}We parse from metafields the number of reviews. First we try to use the old way, and then the updated way{%- endcomment -%}
+          {%- if product.metafields.spr.reviews contains 'itemprop="reviewCount"' -%}
+            {%- assign reviews_count = product.metafields.spr.reviews | split: '<meta itemprop="reviewCount" content="' | last | split: '">' | first | times: 1 -%}
+          {%- else -%}
+            {%- assign reviews_count = product.metafields.spr.reviews | split: '"reviewCount": "' | last | split: '"' | first | plus: 0 -%}
+          {%- endif -%}
+
+          <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" aria-expanded="false">
+            <span>{{ 'product.tabs.reviews' | t }} {% if product.metafields.spr.reviews %}<span class="text--light">({{ reviews_count | default: 0 }})</span>{% endif %}</span>
+            <span class="Collapsible__Plus"></span>
+          </button>
+
+          <div class="Collapsible__Inner">
+            <div class="Collapsible__Content">
+              <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+            </div>
+          </div>
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if product_tabs != blank -%}
+  <div class="Product__Tabs">
+    {% comment %}
+    {%- if product.description != empty -%}
+      <div class="Collapsible Collapsible--large">
+        <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" aria-expanded="false">
+          {%- if request.locale.iso_code == 'en' -%}
+            Item Introduction
+          {%- elsif request.locale.iso_code == 'zh-CN' -%}
+            项目介绍
+          {%- else -%}
+            アイテム紹介
+          {%- endif -%}
+          <span class="Collapsible__Plus"></span>
+        </button>
+        <div class="Collapsible__Inner">
+          <div class="Collapsible__Content">
+            <div class="Rte">{{- product.description -}}</div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+    {% endcomment %}
+    {%- if product.metafields.my_fields.product_preorder -%}
+      <div id="reserve" class="Product__Tabs-reserve"></div>
+      <div class="Collapsible Collapsible--large Product__Tabs-reserve_content" {{ block.shopify_attributes }}>
+        <button class="Collapsible__Button Heading u-h6" data-action="toggle-collapsible" aria-expanded="false">
+          {%- if request.locale.iso_code == 'en' -%}
+            Regarding delivery
+          {%- elsif request.locale.iso_code == 'zh-CN' -%}
+            关于交货
+          {%- else -%}
+            お届けに関して
+          {%- endif -%}
+          <span class="Collapsible__Plus"></span>
+        </button>
+        <div class="Collapsible__Inner">
+          <div class="Collapsible__Content">
+            <div class="Rte">
+              {{- product.metafields.my_fields.product_preorder_detail | newline_to_br -}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+    {{- product_tabs -}}
+  </div>
+{%- endif -%}

@@ -1,0 +1,13 @@
+<script type="text/javascript">
+	{% if template.name == "product" %}
+		var productVICHandle = '{{ product.handle }}';
+	{% endif %}
+	var isCartPage = false;
+	{% if template.name == "cart" or template.name == "checkout" %}
+		isCartPage = true;
+	{% endif %}
+</script>
+{{"alert.css"|asset_url|stylesheet_tag}}
+{{"variants-in-catalog.css"|asset_url|stylesheet_tag}}
+{{"alert.js"|asset_url|script_tag}}
+{% include "variants-in-catalog-config" %}

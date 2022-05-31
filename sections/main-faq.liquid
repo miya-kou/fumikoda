@@ -1,0 +1,80 @@
+<section data-section-type="faq" data-section-id="{{ section.id }}" class="p-page">
+  <header class="p-page__header">
+    <div class="p-page__container">
+      <h1 class="p-page__title">
+        {%- if request.locale.iso_code == 'en' -%}
+          frequently asked questions
+        {%- elsif request.locale.iso_code == 'zh-CN' -%}
+          常见问题
+        {%- else -%}
+          {{ page.title }}
+        {%- endif -%}
+      </h1>
+    </div>
+  </header>
+
+  <div class="p-page__container">
+    <div class="Faq">
+      {%- if request.locale.iso_code == 'en' -%}
+        {{ section.settings.en }}
+      {%- elsif request.locale.iso_code == 'zh-CN' -%}
+        {{ section.settings.zh_cn }}
+      {%- else -%}
+        {{ section.settings.jp }}
+      {%- endif -%}
+
+      {% comment %}
+      {%- for block in section.blocks -%}
+        <h1 class="Faq__Section Heading u-h1">
+          <span class="Anchor" id="block-{{ block.id }}"></span>
+          {{- block.settings.heading | escape -}}
+        </h1>
+        <div class="Faq__ItemWrapper">
+          {{ block.settings.faq }}
+        </div>
+      {%- endfor -%}
+      {% endcomment %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "html",
+      "id": "jp",
+      "label": "日本語"
+    },
+    {
+      "type": "html",
+      "id": "en",
+      "label": "英語"
+    },
+    {
+      "type": "html",
+      "id": "zh_cn",
+      "label": "中国語"
+    }
+  //],
+  //"blocks": [
+  // {
+  //   "type": "block",
+  //   "name": "項目",
+  //   "settings": [
+  //     {
+  //       "type": "text",
+  //       "id": "heading",
+  //       "label": "見出し"
+  //     },
+  //     {
+  //       "type": "html",
+  //       "id": "faq",
+  //       "label": "HTML"
+  //     }
+  //   ]  
+  // }
+  ]  
+}
+{% endschema %}

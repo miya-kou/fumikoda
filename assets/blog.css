@@ -1,0 +1,127 @@
+/*------------------ BLOG ------------------*/
+/**
+ * ----------------------------------------------------------------------------
+ * Article inner
+ * ----------------------------------------------------------------------------
+ */
+
+@media screen and (min-width: 641px) {
+  h1.Article__Title {
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .Article__Body p {
+    font-size: 16px;
+    line-height: 200%;
+  }
+  .features--heading-large .Rte h1 {
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .features--heading-large .Rte h2 {
+    font-weight: bold;
+    font-size: 23px;
+  }
+  .features--heading-large .Rte h3 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .features--heading-large .Rte h4 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .features--heading-large .Rte h5 {
+    font-weight: normal;
+    font-size: 14px;
+  }
+  .features--heading-large .Rte h6 {
+    font-weight: normal;
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+  }
+  .features--heading-large .Rte h6 a {
+    min-width: 250px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+  	font-size: 13px;
+  	text-decoration: none;
+    margin: 0 auto;
+  	color: #FFF;
+    border-color: #000;
+  	background-color: #000;
+    padding: 16px 28px;
+    line-height: normal;
+    border: 1px solid transparent;
+    border-radius: 0;
+    text-transform: uppercase;
+  	font-weight: normal;
+  }
+  .features--heading-large .Rte h6 a:hover {
+  	color: #FFF;
+    opacity: 0.8;
+  }
+}
+@media screen and (max-width: 640px) {
+  h1.Article__Title {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .Article__Body p {
+    font-size: 14px;
+    line-height: 200%;
+  }
+  .features--heading-large .Rte h1 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .features--heading-large .Rte h2 {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .features--heading-large .Rte h3 {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .features--heading-large .Rte h4 {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .features--heading-large .Rte h5 {
+    font-weight: normal;
+    font-size: 12px;
+  }
+  .features--heading-large .Rte h6 {
+    font-weight: normal;
+    font-size: 12px;
+    color: #999;
+  }
+  .features--heading-large .Rte h6 a {
+    min-width: 250px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+  	font-size: 13px;
+  	text-decoration: none;
+    margin: 0 auto;
+  	color: #FFF;
+    border-color: #000;
+  	background-color: #000;
+    padding: 16px 28px;
+    line-height: normal;
+    border: 1px solid transparent;
+    border-radius: 0;
+    text-transform: uppercase;
+  	font-weight: normal;
+  }
+  .features--heading-large .Rte h6 a:hover {
+  	color: #FFF;
+    opacity: 0.8;
+  }
+}
+
+.Table,
+.Rte table {
+  font-size: 16px;
+}

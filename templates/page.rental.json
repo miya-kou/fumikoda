@@ -1,0 +1,147 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-rental",
+      "blocks": {
+        "acb24f97-d181-4a9a-b682-1de58b5bc027": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-arianna_ivory-ivory_1_600x_a10ba673-7c6a-42a1-a8b9-ed18c9d32b1b.png",
+            "title": "ショルダーバッグM　ARIANNA アイボリー、アイボリー",
+            "url": "\/products\/rental-arianna?variant=41730375647395"
+          }
+        },
+        "b392df0d-a47a-4b38-82de-eba646206066": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-arianna_black-black_1_600x_863ce972-aa0e-4e77-9257-ab5314f3d530.png",
+            "title": "ショルダーバッグM　ARIANNA ブラック、ブラック",
+            "url": "\/products\/rental-arianna?variant=41730375680163"
+          }
+        },
+        "a82dd8b0-6093-4b0e-be14-82efd9ca1e60": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-arianna_white-ivory_1_600x_01a6d479-afa9-4aff-bf8f-bd3a94b7079e.png",
+            "title": "ショルダーバッグM　ARIANNA ホワイト、アイボリー",
+            "url": "\/products\/rental-arianna?variant=41730375745699"
+          }
+        },
+        "f6118860-8068-4a50-9fa6-ebc1dbd30cb2": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-arianna-ii_black-blackpython_1_600x_51e0502d-4644-42ec-b5eb-edf12f21d5ed.png",
+            "title": "ショルダーバッグS　ARIANNA Ⅱ ブラック、ブラックパイソン",
+            "url": "\/products\/rental-arianna-ii"
+          }
+        },
+        "2c0b2349-fc38-4d9c-8b32-e877683a17b3": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-gina_white-sidebrownblack_1_600x_475cf0e4-a049-49cb-8ad1-78d88d3dd703.png",
+            "title": "ショルダーバッグL　GINA ホワイト、サイド ブラウン\/ブラック",
+            "url": "\/products\/rental-gina?variant=41730378072227"
+          }
+        },
+        "17cd4ebd-7233-4092-9f60-5c21df638ee3": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/gina-ii_white-sidebrown-black_1_600x_7e4a6f73-df31-48ca-8df1-080158c3a6cb.png",
+            "title": "ショルダーバッグM　GINA II ホワイト、サイド アイボリー",
+            "url": "\/products\/rental-gina-ii"
+          }
+        },
+        "3f2e3e6c-8c21-4a90-8718-ece1af971cf6": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-gina-ii_white-sideivory_1_600x_07dd7f2f-7fd9-4ac3-a47a-dffbc606b404.jpg",
+            "title": "ミニショルダーバッグS　GINA baby ホワイト、サイド ブラウン\/ブラック",
+            "url": "\/products\/rental-gina-baby"
+          }
+        },
+        "4041efb6-1ec2-456e-a3cc-6ba1d5ef4c10": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-billy_ivory_m_1_600x_0ee96a35-7c39-4417-bb34-b13c2b0ffd5c.png",
+            "title": "2wayリュックM　BILLY アイボリー",
+            "url": "\/products\/rental-billy?variant=41730377384099"
+          }
+        },
+        "7de46529-2792-4c39-bd9b-9be7a28790ed": {
+          "type": "rental",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-billy_black_l_1_600x_9c9100d5-bf53-437d-bb7d-963af3ce1474.png",
+            "title": "2wayリュックL　BILLY ブラック",
+            "url": "\/products\/rental-billy?variant=41730377416867"
+          }
+        },
+        "5b95f55f-2b73-49e1-b652-de9906cb8041": {
+          "type": "rental",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-gina_beige-sideivory_1_600x_1ea29bdc-592a-4cde-a743-46ce4f62671f.png",
+            "title": "ショルダーバッグL　GINA ベージュ、サイド アイボリー",
+            "url": "\/products\/rental-gina?variant=41730378039459"
+          }
+        },
+        "40cb73d6-aa79-4d40-9d80-d7447d449d1a": {
+          "type": "rental",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-alex_navy_l_1_600x_640e3763-74f5-46cc-8cc8-ca686b6c48a1.jpg",
+            "title": "ALEX L ネイビー",
+            "url": "\/products\/rental-alex?variant=41730374697123"
+          }
+        },
+        "57ff06c1-6d3c-49d2-9b02-c37a0a76a138": {
+          "type": "rental",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-alex_black_m_1_600x_b17a2844-aa7c-44e1-b7a9-4616d27eb87e.jpg",
+            "title": "ALEX M ブラック",
+            "url": "\/products\/rental-alex?variant=41730374729891"
+          }
+        },
+        "2063d7c5-7a16-4d11-ae9d-d6e6e9e81d7a": {
+          "type": "rental",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-alex_beige_l_1_600x_a631b123-fbc1-4ff7-8c3f-08f578d3e768.jpg",
+            "title": "ALEX L ベージュ",
+            "url": "\/products\/rental-alex?variant=41730374762659"
+          }
+        },
+        "c5950791-92c5-4d3a-b30e-9b616a08eb88": {
+          "type": "rental",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/rental-alex_beige_m_1_600x_27b1a051-6cca-47ab-9c70-57e1d0fe9100.jpg",
+            "title": "ALEX M ベージュ",
+            "url": "\/products\/rental-alex?variant=41730374795427"
+          }
+        }
+      },
+      "block_order": [
+        "acb24f97-d181-4a9a-b682-1de58b5bc027",
+        "b392df0d-a47a-4b38-82de-eba646206066",
+        "a82dd8b0-6093-4b0e-be14-82efd9ca1e60",
+        "f6118860-8068-4a50-9fa6-ebc1dbd30cb2",
+        "2c0b2349-fc38-4d9c-8b32-e877683a17b3",
+        "17cd4ebd-7233-4092-9f60-5c21df638ee3",
+        "3f2e3e6c-8c21-4a90-8718-ece1af971cf6",
+        "4041efb6-1ec2-456e-a3cc-6ba1d5ef4c10",
+        "7de46529-2792-4c39-bd9b-9be7a28790ed",
+        "5b95f55f-2b73-49e1-b652-de9906cb8041",
+        "40cb73d6-aa79-4d40-9d80-d7447d449d1a",
+        "57ff06c1-6d3c-49d2-9b02-c37a0a76a138",
+        "2063d7c5-7a16-4d11-ae9d-d6e6e9e81d7a",
+        "c5950791-92c5-4d3a-b30e-9b616a08eb88"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

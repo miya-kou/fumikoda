@@ -1,0 +1,55 @@
+<article class="c-blogpost__article" {% if block %}{{ block.shopify_attributes }}{% endif %}>
+  {%- if article.image != blank -%}
+    {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,400,600,700,800,900,1000,1200', image: article.image -%}{%- endcapture -%}
+    {%- assign image_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+    <a class="ArticleItem__ImageWrapper AspectRatio AspectRatio--withFallback" style="background: url({{ article.image | img_url: '1x1', format: 'jpg' }}); padding-bottom: 58%; --aspect-ratio: 1.7" href="{{ article.url }}">
+      <img class="ArticleItem__Image Image--lazyLoad Image--fadeIn"
+           data-src="{{ image_url }}"
+           data-widths="[{{ supported_sizes }}]"
+           data-sizes="auto"
+           alt="{{ article.image.alt | escape }}">
+
+      <noscript>
+        <img class="ArticleItem__Image" src="{{ article.image | img_url: '600x' }}" alt="{{ article.image.alt | escape }}">
+      </noscript>
+    </a>
+  {%- endif -%}
+
+  <div class="c-blogpost__article__content">
+    {%- if template.name == 'index' and section.settings.show_category and article.tags != empty -%}
+      <span class="ArticleItem__Category Heading Text--subdued">
+        {% for tag in article.tags %}
+        {%- if tag == "LIFE STYLE" or tag == "SDGs" or tag == "EVENT" or tag == "RESERCH" or tag == "AMBASSADOR" or tag == "FUMIKODA STORY" or tag == "FUMITALK" -%}
+          {{ tag }}
+          {%- break -%}
+        {%- endif -%}    
+      {% endfor %}
+      </span>
+    {%- endif -%}
+
+    {%- if blog.handle == 'journal' -%}
+      <span class="ArticleItem__Category Heading Text--subdued">
+        {%- if current_tags != blank -%}
+          {{ current_tags }}
+        {%-  else -%}
+          {% for tag in article.tags %}
+            {%- if tag == "LIFE STYLE" or tag == "SDGs" or tag == "EVENT" or tag == "RESERCH" or tag == "AMBASSADOR" or tag == "FUMIKODA STORY" or tag == "FUMITALK" -%}
+              {{ tag }}
+              {%- break -%}
+            {%- endif -%}    
+          {% endfor %}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+
+    <h2 class="c-blogpost__article__title">
+      <a href="{{ article.url }}">{{ article.title }}</a>
+    </h2>
+
+    {%- unless template.name == 'article' -%}
+      {% comment %}<p class="ArticleItem__Excerpt">{{ article.excerpt_or_content | strip_html | truncate: 150 }}</p>{% endcomment %}
+      {% comment %}<a href="{{ article.url }}" class="c-blogpost__article__link">{{ 'blog.article.read_more' | t }}</a>{% endcomment %}
+    {%- endunless -%}
+  </div>
+</article>
