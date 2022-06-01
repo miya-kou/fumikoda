@@ -213,38 +213,6 @@
     {%- endif -%}
   </div>
 
-  {%- if section.settings.show_prev_next and blog.next_article or blog.previous_article -%}
-    <aside class="ArticleNav">
-      <div class="c-container">
-        <div class="Grid Grid--m Grid--center">
-          {%- if blog.next_article -%}
-            <div class="Grid__Cell 1/2--tablet-and-up">
-              {%- render 'article-item', article: blog.next_article -%}
-            </div>
-          {%- elsif blog.articles_count > 3 -%}
-            {% comment %}
-            <div class="Grid__Cell 1/2--tablet-and-up">
-              {%- render 'article-item', article: blog.articles.last -%}
-            </div>
-            {% endcomment %}
-          {%- endif -%}
-
-          {%- if blog.previous_article -%}
-            <div class="Grid__Cell 1/2--tablet-and-up">
-              {%- render 'article-item', article: blog.previous_article -%}
-            </div>
-          {%- elsif blog.articles_count > 3 -%}
-            {% comment %}
-            <div class="Grid__Cell 1/2--tablet-and-up">
-              {%- render 'article-item', article: blog.articles.first -%}
-            </div>
-            {% endcomment %}
-          {%- endif -%}
-        </div>
-      </div>
-    </aside>
-  {%- endif -%}
-
 <!-- 2022/4/19 StoreHero検証用 -->
 	<aside class="blog_posts">
       <div style="width: 90%; margin:0 auto; padding: 50px 0 50px;">
